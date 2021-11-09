@@ -9,7 +9,7 @@
 #define LUTRAM_MODE_1_WIDTH 20
 
 #define BRAM_8K_BITS 8192
-#define BRAM_128_BITS 131072
+#define BRAM_128K_BITS 131072
 
 #define LUTRAM_AREA 4
 #define LUT_AREA 3.5
@@ -273,12 +273,68 @@ void find_best_mapping(RAM r){
         }
     }
     cout << "BRAM 8K " << required_BRAM8K << " " << required_BRAM8K_logic << " " << BRAM8K_required_area << endl; 
+    
     //MAP TO 128 BRAM
+    int required_BRAM128K = INT_MAX;
+    int required_BRAM128K_logic = 0;
+    double BRAM128K_required_area = DBL_MAX;
+    cout << "========128K BRAM========" << endl;
+    for(int x = 1 ; x <= 32; x *= 2){
+        //x32 is not available on TRUEDUALPORT mode!
+        if(r.mode == "TrueDualPort" && x == 32){
+            continue;
+        }
+        int req_ram = ceil((double)r.width/x) * ceil((double)r.depth/(BRAM_128K_BITS/x));
+        int req_logic = 0;
+        if(r.depth > (BRAM_128K_BITS/x)){//extra logic needed
+            if((double)r.depth/(BRAM_128K_BITS/x) > 16){
+                //can not be implemented
+                req_ram = -1;
+                req_logic = -1;
+            }
+            else{
+                int num_of_mux = (ceil((double)r.depth/(BRAM_128K_BITS/x))/4) + 1;
+                if((int) ceil((double)r.depth/(BRAM_128K_BITS/x)) % 4 == 1)
+                    num_of_mux--;
+                
+                req_logic += r.width * num_of_mux;
+                //decoder logic
+                int extra_rams = ceil((double)r.depth/(BRAM_128K_BITS/x));
+                if(extra_rams == 2){
+                    req_logic += 1; //only one LUT is required 
+                }
+                else{
+                    extra_rams = pow(2,ceil(log(extra_rams)/log(2)));
+                    req_logic += extra_rams;
+                } 
+            }
+        }
+
+        cout << "128k BRAM mode x" << x << " " << req_ram << " " << req_logic << endl;  
+
+        if(req_logic >= 0 && req_ram >= 0){
+            if(req_ram * BRAM_128K_AREA + req_logic * LUT_AREA < BRAM128K_required_area){
+                BRAM128K_required_area = req_ram * BRAM_128K_AREA + req_logic * LUT_AREA;
+                required_BRAM128K = req_ram;
+                required_BRAM128K_logic = req_logic;
+            }
+        }
+    }
+    cout << "BRAM 8K " << required_BRAM128K << " " << required_BRAM128K_logic << " " << BRAM128K_required_area << endl; 
 
 }
 
 int main(){
     parse_input();
-    find_best_mapping(circuits[0].ram[0]);
+    
+
+    for(int i = 0 ; i < num_of_circuits; i++){
+        for(int j = 0; j < circuits[i].ram.size(); j++){
+            find_best_mapping(circuits[i].ram[j]);
+        }
+    }
+
+
+
     return 0;
 }
