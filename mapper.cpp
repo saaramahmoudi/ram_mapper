@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include<string>  
 #include <bits/stdc++.h>
 
 #define LUTRAM_MODE_0_WORDS 64 
@@ -35,6 +36,8 @@ struct Circuit{
 //global variables
 Circuit* circuits;
 int num_of_circuits;
+ofstream checker_input("checker_input.txt");
+int counter = 0;
 
 //init the circuits based on input file
 void init(){
@@ -116,19 +119,56 @@ void parse_input(){
 }
 
 
+void write_checker_file(RAM r, int circuit_id, int best_type, int best_mode, int LUT, int s, int p){
+    int w;
+    int d;
+    if(best_type == 0){
+        if(best_mode == 0){
+            w = 10;
+            d = 64;
+        }
+        else{
+            w = 20;
+            d = 32;
+        }
+    }
+    if(best_type == 1){
+        w = best_mode;
+        d = BRAM_8K_BITS / best_mode;
+    }
+
+    if(best_type == 2){
+        w = best_mode;
+        d =  BRAM_128K_BITS / best_mode;
+    }
+
+    string out = "";
+    out += to_string(circuit_id) + " " + to_string(r.id) + " " + to_string(LUT) + " ";
+    out += "LW " + to_string(r.width) + " LD " + to_string(r.depth) + " ";
+    out += "ID " + to_string(counter) + " S " + to_string(s) + " P " + to_string(p); 
+    out += " Type " + to_string(best_type+1) + " Mode " + r.mode;
+    out += " W " + to_string(w) + " D " + to_string(d);
+    
+    checker_input << out;
+    checker_input << endl;
+    counter++;
+}
+
 //map available logical RAMs to physical in Circuit c
-void find_best_mapping(RAM r){
-    cout << "******************************************************************" << endl;
-    cout << "MAPPING RAM " << r.mode << " " << r.depth << " " << r.width << endl;
+void find_best_mapping(RAM r, int circuit_id){
     //MAP TO LUTRAM 
     int required_LUTRAM = -1;
     int required_LUTRAM_logic = -1;
     double LUTRAM_required_area = -1;
+    int best_LUTRAM_mode = -1;
+    int best_LUTRAM_s;
+    int best_LUTRAM_p;
     if(r.mode != "TrueDualPort"){
-        cout << "========LUTRAM========" << endl;
         //LUTRAM MODE 0
         int lut_mode_0 = 0;
         int lut_mode_0_logic = 0;
+        int lut_mode_0_p = 0;
+        int lut_mode_0_s = 0;
         
         if((double)r.depth/LUTRAM_MODE_0_WORDS > 16){
             //can not be implemented 
@@ -138,13 +178,18 @@ void find_best_mapping(RAM r){
         else{
             if(r.width < LUTRAM_MODE_0_WIDTH){
                 lut_mode_0++;
+                lut_mode_0_p++;
             }
             else{
                 lut_mode_0 += ceil((double)r.width/LUTRAM_MODE_0_WIDTH);
+                lut_mode_0_p += ceil((double)r.width/LUTRAM_MODE_0_WIDTH);
+
             }
             //extra logic is needed
+            lut_mode_0_s = 1;
             if(r.depth > LUTRAM_MODE_0_WORDS){
                 lut_mode_0 *= ceil((double)r.depth/LUTRAM_MODE_0_WORDS);
+                lut_mode_0_s = ceil((double)r.depth/LUTRAM_MODE_0_WORDS);
                 //mux logic
                 int num_of_mux = ceil((double)r.depth/LUTRAM_MODE_0_WORDS)/4 + 1;
                 if((int) ceil((double)r.depth/LUTRAM_MODE_0_WORDS) % 4 == 1){
@@ -162,11 +207,12 @@ void find_best_mapping(RAM r){
                 }
 
             }
-            cout << "LUTRAM MODE 0 " << lut_mode_0 << " " << lut_mode_0_logic << " " << endl;
         }
         //LUTRAM MODE 1
         int lut_mode_1 = 0;
         int lut_mode_1_logic = 0;
+        int lut_mode_1_p = 0;
+        int lut_mode_1_s = 0;
         if((double)r.depth/LUTRAM_MODE_1_WORDS > 16){
             //can not be implemented 
             lut_mode_1 = -1; 
@@ -175,13 +221,17 @@ void find_best_mapping(RAM r){
         else{
             if(r.width < LUTRAM_MODE_1_WIDTH){
                 lut_mode_1++;
+                lut_mode_1_p++;
             }
             else{
                 lut_mode_1 += ceil((double)r.width/LUTRAM_MODE_1_WIDTH);
+                lut_mode_1_p += ceil((double)r.width/LUTRAM_MODE_1_WIDTH);
             }
             //extra logic needed
+            lut_mode_1_s = 1;
             if(r.depth > LUTRAM_MODE_1_WORDS){
                 lut_mode_1 *= ceil((double)r.depth/LUTRAM_MODE_1_WORDS);
+                lut_mode_1_s = ceil((double)r.depth/LUTRAM_MODE_1_WORDS);
                 //mux logic
                 int num_of_mux = (ceil((double)r.depth/LUTRAM_MODE_1_WORDS)/4) + 1;
                 if((int) ceil((double)r.depth/LUTRAM_MODE_1_WORDS) % 4 == 1)
@@ -198,25 +248,36 @@ void find_best_mapping(RAM r){
                     lut_mode_1_logic += extra_rams;
                 }
             }
-            cout << "LUTRAM MODE 1 " << lut_mode_1 << " " << lut_mode_1_logic << " " << endl;
         }
 
         if(lut_mode_0 < 0){
             required_LUTRAM = lut_mode_1;
             required_LUTRAM_logic = lut_mode_1_logic;
+            best_LUTRAM_mode = 1;
+            best_LUTRAM_s = lut_mode_1_s;
+            best_LUTRAM_p = lut_mode_1_p;
         }
         if(lut_mode_1 < 0){
             required_LUTRAM = lut_mode_0;
             required_LUTRAM_logic = lut_mode_0_logic;
+            best_LUTRAM_mode = 0;
+            best_LUTRAM_s = lut_mode_0_s;
+            best_LUTRAM_p = lut_mode_0_p;
         }
         if(lut_mode_1 >= 0 && lut_mode_0 >= 0){
             if((LUTRAM_AREA*lut_mode_0+ LUT_AREA*lut_mode_0_logic) > (LUTRAM_AREA*lut_mode_1+LUT_AREA*lut_mode_1_logic)){
                 required_LUTRAM = lut_mode_1;
                 required_LUTRAM_logic = lut_mode_1_logic;
+                best_LUTRAM_mode = 1;
+                best_LUTRAM_s = lut_mode_1_s;
+                best_LUTRAM_p = lut_mode_1_p;
             }
             else{
                 required_LUTRAM = lut_mode_0;
                 required_LUTRAM_logic = lut_mode_0_logic;
+                best_LUTRAM_mode = 0;
+                best_LUTRAM_s = lut_mode_0_s;
+                best_LUTRAM_p = lut_mode_0_p;
             }
         }
     }   
@@ -224,19 +285,21 @@ void find_best_mapping(RAM r){
     if(required_LUTRAM >= 0 && required_LUTRAM_logic >= 0){
         LUTRAM_required_area = LUTRAM_AREA * required_LUTRAM + LUT_AREA * required_LUTRAM_logic;
     }
-    cout << "LUTRAM " << required_LUTRAM << " " << required_LUTRAM_logic << " " <<  LUTRAM_required_area << endl; 
 
     //MAP TO 8K BRAM
     int required_BRAM8K = INT_MAX;
     int required_BRAM8K_logic = 0;
     double BRAM8K_required_area = DBL_MAX;
-    cout << "========8K BRAM========" << endl;
+    int best_8KBRAM_mode = -1;
+    int best_8KBRAM_p; 
+    int best_8KBRAM_s;
     for(int x = 1 ; x <= 32; x *= 2){
         //x32 is not available on TRUEDUALPORT mode!
         if(r.mode == "TrueDualPort" && x == 32){
             continue;
         }
         int req_ram = ceil((double)r.width/x) * ceil((double)r.depth/(BRAM_8K_BITS/x));
+
         int req_logic = 0;
         if(r.depth > (BRAM_8K_BITS/x)){//extra logic needed
             if((double)r.depth/(BRAM_8K_BITS/x) > 16){
@@ -262,23 +325,25 @@ void find_best_mapping(RAM r){
             }
         }
 
-        cout << "8k BRAM mode x" << x << " " << req_ram << " " << req_logic << endl;  
-
         if(req_logic >= 0 && req_ram >= 0){
             if(req_ram * BRAM_8K_AREA + req_logic * LUT_AREA < BRAM8K_required_area){
                 BRAM8K_required_area = req_ram * BRAM_8K_AREA + req_logic * LUT_AREA;
                 required_BRAM8K = req_ram;
                 required_BRAM8K_logic = req_logic;
+                best_8KBRAM_mode = x;
+                best_8KBRAM_s = ceil((double)r.depth/(BRAM_8K_BITS/x));
+                best_8KBRAM_p = ceil((double)r.width/x);
             }
         }
-    }
-    cout << "BRAM 8K " << required_BRAM8K << " " << required_BRAM8K_logic << " " << BRAM8K_required_area << endl; 
+    } 
     
     //MAP TO 128 BRAM
     int required_BRAM128K = INT_MAX;
     int required_BRAM128K_logic = 0;
     double BRAM128K_required_area = DBL_MAX;
-    cout << "========128K BRAM========" << endl;
+    int best_128KBRAM_mode = -1;
+    int best_128KBRAM_p;
+    int best_128KBRAM_s;
     for(int x = 1 ; x <= 32; x *= 2){
         //x32 is not available on TRUEDUALPORT mode!
         if(r.mode == "TrueDualPort" && x == 32){
@@ -309,32 +374,83 @@ void find_best_mapping(RAM r){
                 } 
             }
         }
-
-        cout << "128k BRAM mode x" << x << " " << req_ram << " " << req_logic << endl;  
-
+  
         if(req_logic >= 0 && req_ram >= 0){
             if(req_ram * BRAM_128K_AREA + req_logic * LUT_AREA < BRAM128K_required_area){
                 BRAM128K_required_area = req_ram * BRAM_128K_AREA + req_logic * LUT_AREA;
                 required_BRAM128K = req_ram;
                 required_BRAM128K_logic = req_logic;
+                best_128KBRAM_mode = x;
+                best_128KBRAM_s = ceil((double)r.depth/(BRAM_128K_BITS/x));
+                best_128KBRAM_p = ceil((double)r.width/x);
             }
         }
     }
-    cout << "BRAM 8K " << required_BRAM128K << " " << required_BRAM128K_logic << " " << BRAM128K_required_area << endl; 
 
+    //choose the best solution
+    if(LUTRAM_required_area < 0){
+        LUTRAM_required_area = DBL_MAX;
+    }
+    int best_type;
+    int best_mode;
+    double best_area;
+    int LUT;
+    int best_p;
+    int best_s;
+
+    if(LUTRAM_required_area < required_BRAM8K){
+        if(LUTRAM_required_area <= required_BRAM128K){
+            best_area = LUTRAM_required_area;
+            best_mode = best_LUTRAM_mode;
+            best_type = 0;
+            LUT = required_LUTRAM_logic;
+            best_p = best_LUTRAM_p;
+            best_s = best_LUTRAM_s;
+        }
+        else if(required_BRAM128K < LUTRAM_required_area){
+            best_area = required_BRAM128K;
+            best_mode = best_128KBRAM_mode;
+            best_type = 2;
+            LUT = required_BRAM128K_logic;
+            best_p = best_128KBRAM_p;
+            best_s = best_128KBRAM_s;
+        }
+    }
+
+    if(LUTRAM_required_area > required_BRAM8K){
+        if(required_BRAM8K <= required_BRAM128K){
+            best_area = required_BRAM8K;
+            best_mode = best_8KBRAM_mode;
+            best_type = 1;
+            LUT = required_BRAM8K_logic;
+            best_p = best_8KBRAM_p;
+            best_s = best_8KBRAM_s;
+
+        }
+        else if(required_BRAM8K > required_BRAM128K){
+            best_area = required_BRAM128K;
+            best_mode = best_128KBRAM_mode;
+            best_type = 2;
+            LUT = required_BRAM128K_logic;
+            best_p = best_128KBRAM_p;
+            best_s = best_128KBRAM_s;
+        }
+    }
+
+    write_checker_file(r,circuit_id,best_type,best_mode,LUT,best_s,best_p);
+    
+    
 }
 
 int main(){
     parse_input();
     
-
     for(int i = 0 ; i < num_of_circuits; i++){
+        counter = 0;
         for(int j = 0; j < circuits[i].ram.size(); j++){
-            find_best_mapping(circuits[i].ram[j]);
+            find_best_mapping(circuits[i].ram[j],i);
         }
     }
-
-
-
+    // find_best_mapping(circuits[0].ram[0],0);
     return 0;
 }
