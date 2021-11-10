@@ -197,7 +197,7 @@ void write_checker_file(RAM r, int circuit_id){
 }
 
 //map available logical RAMs to physical in Circuit c
-void find_best_mapping(RAM r, int circuit_id){
+void find_best_mapping(RAM r, int circuit_id, bool re_map){
     //MAP TO LUTRAM 
     int required_LUTRAM = -1;
     int required_LUTRAM_logic = -1;
@@ -205,7 +205,7 @@ void find_best_mapping(RAM r, int circuit_id){
     int best_LUTRAM_mode = -1;
     int best_LUTRAM_s;
     int best_LUTRAM_p;
-    if(r.mode == "SimpleDualPort"){
+    if((r.mode == "SimpleDualPort" && !re_map) || (r.mode != "TrueDualPort" && re_map)){
         //LUTRAM MODE 0
         int lut_mode_0 = 0;
         int lut_mode_0_logic = 0;
@@ -337,7 +337,7 @@ void find_best_mapping(RAM r, int circuit_id){
     int best_8KBRAM_s;
     for(int x = 1 ; x <= BRAM_8K_MAX_WIDTH; x *= 2){
         //x32 is not available on TRUEDUALPORT mode!
-        if(r.mode != "SimpleDualPort" && x == BRAM_8K_MAX_WIDTH){
+        if(((r.mode != "SimpleDualPort" && !re_map) || (r.mode == "TrueDualPort" && re_map)) && x == BRAM_8K_MAX_WIDTH){
             continue;
         }
         int req_ram = ceil((double)r.width/x) * ceil((double)r.depth/(BRAM_8K_BITS/x));
@@ -388,7 +388,7 @@ void find_best_mapping(RAM r, int circuit_id){
     int best_128KBRAM_s;
     for(int x = 1 ; x <= BRAM_128K_MAX_WIDTH; x *= 2){
         //x128 is not available on TRUEDUALPORT mode!
-        if(r.mode != "SimpleDualPort" && x == BRAM_128K_MAX_WIDTH){
+        if(((r.mode != "SimpleDualPort" && !re_map) || (r.mode == "TrueDualPort" && re_map)) && x == BRAM_128K_MAX_WIDTH){
             continue;
         }
         int req_ram = ceil((double)r.width/x) * ceil((double)r.depth/(BRAM_128K_BITS/x));
@@ -479,20 +479,39 @@ void find_best_mapping(RAM r, int circuit_id){
         }
     }
 
-    LP_map lp_map_temp;
-    lp_map_temp.type = best_type;
-    lp_map_temp.mode = best_mode;
-    lp_map_temp.s = best_s;
-    lp_map_temp.p = best_p;
-    lp_map_temp.additional_logic = LUT;
-    lp_map_temp.r_index = r.id;
-    lp_map_temp.c_index = circuit_id;
-    lp_map_temp.physical_ram_id = counter;
-    counter++;
-    
-    lp_maps.push_back(lp_map_temp);
-    circuits[circuit_id].ram[r.id].lp_map_id = lp_maps_id;
-    lp_maps_id++;
+    if(!re_map){
+        LP_map lp_map_temp;
+        lp_map_temp.type = best_type;
+        lp_map_temp.mode = best_mode;
+        lp_map_temp.s = best_s;
+        lp_map_temp.p = best_p;
+        lp_map_temp.additional_logic = LUT;
+        lp_map_temp.r_index = r.id;
+        lp_map_temp.c_index = circuit_id;
+        lp_map_temp.physical_ram_id = counter;
+        counter++;
+        
+        lp_maps.push_back(lp_map_temp);
+        circuits[circuit_id].ram[r.id].lp_map_id = lp_maps_id;
+        lp_maps_id++;
+    }
+    else{
+        
+        int lp_index = circuits[circuit_id].ram[r.id].lp_map_id;
+        cout << "PREVIOUS MAPPING.. " << lp_maps[lp_index].type+1 << " " << lp_maps[lp_index].mode << endl;
+        lp_maps[lp_index].type = best_type;
+        lp_maps[lp_index].mode = best_mode;
+        lp_maps[lp_index].s = best_s;
+        lp_maps[lp_index].p = best_p;
+        lp_maps[lp_index].additional_logic = LUT;
+
+        cout << "NEW MAPPING..." << endl;
+        cout << lp_maps[lp_index].type+1 << " " << lp_maps[lp_index].mode << endl;
+
+        cout << "choose between.." << endl;
+        cout << BRAM128K_required_area << " " << BRAM8K_required_area << " " << LUTRAM_required_area << endl;
+
+    }
     
 }
 
@@ -554,7 +573,7 @@ void pack_leftovers(){
             continue;
         }
 
-        if(circuits[c_index].ram[r_index].packed){//already packed with another rom git
+        if(circuits[c_index].ram[r_index].packed){//already packed with another rom
             continue;
         }
         int max_ram_id_2 = -1;
@@ -654,25 +673,49 @@ void pack_leftovers(){
     }
 }
 
+//debug function
+void print_mapping(RAM r, int c_index){
+    int lp_index = r.lp_map_id;
+    cout << "============================================================" << endl;
+    cout << r.mode << endl;
+    cout << r.width << " " << r.depth << endl;
+    cout << "Mapped to .." << endl;
+    cout << lp_maps[lp_index].type+1 <<" " << lp_maps[lp_index].mode << endl;
+
+}
+
+
 int main(){
     parse_input();
     
     for(int i = 0 ; i < num_of_circuits; i++){
         counter = 0;
         for(int j = 0; j < circuits[i].ram.size(); j++){
-            find_best_mapping(circuits[i].ram[j],i);
+            find_best_mapping(circuits[i].ram[j],i,false);
         }
     }
     
     cal_leftovers();
     pack_leftovers();
-
+    
+    for(int i = 0 ; i < num_of_circuits; i++){
+        for(int j = 0; j < circuits[i].ram.size(); j++){
+            if(circuits[i].ram[j].mode == "ROM" || circuits[i].ram[j].mode == "SinglePort"){
+                if(!circuits[i].ram[j].packed){
+                    cout << "***********************************************************************************************************" << endl;
+                    find_best_mapping(circuits[i].ram[j],i,true);
+                    cout << "************************************************************************************************************" << endl;
+                }
+            }
+        }
+    }
+    
+    
     for(int i = 0; i < num_of_circuits; i++){
         for(int j = 0; j < circuits[i].ram.size(); j++){
             write_checker_file(circuits[i].ram[j],i);
         }
     }
-    // cout << circuits[0].ram[109].width << " " << circuits[0].ram[109].depth << endl;
-    // find_best_mapping(circuits[14].ram[0],14);
+    
     return 0;
 }
