@@ -151,11 +151,15 @@ void parse_input(){
 }
 
 
-void write_checker_file(RAM r, int circuit_id, int best_type, int best_mode, int LUT, int s, int p){
+void write_checker_file(RAM r, int circuit_id){
+    
+    int lp_index = r.lp_map_id;
+
+    
     int w;
     int d;
-    if(best_type == 0){
-        if(best_mode == 0){
+    if(lp_maps[lp_index].type == 0){
+        if(lp_maps[lp_index].mode == 0){
             w = 10;
             d = 64;
         }
@@ -164,26 +168,32 @@ void write_checker_file(RAM r, int circuit_id, int best_type, int best_mode, int
             d = 32;
         }
     }
-    if(best_type == 1){
-        w = best_mode;
-        d = BRAM_8K_BITS / best_mode;
+    if(lp_maps[lp_index].type == 1){
+        w = lp_maps[lp_index].mode;
+        d = BRAM_8K_BITS / lp_maps[lp_index].mode;;
     }
 
-    if(best_type == 2){
-        w = best_mode;
-        d =  BRAM_128K_BITS / best_mode;
+    if(lp_maps[lp_index].type == 2){
+        w = lp_maps[lp_index].mode;;
+        d =  BRAM_128K_BITS / lp_maps[lp_index].mode;;
     }
 
+    string temp_mode = "";
+    if(r.packed){
+        temp_mode = "TrueDualPort";
+    }
+    else{
+        temp_mode = r.mode;
+    }
     string out = "";
-    out += to_string(circuit_id) + " " + to_string(r.id) + " " + to_string(LUT) + " ";
+    out += to_string(circuit_id) + " " + to_string(r.id) + " " + to_string(lp_maps[lp_index].additional_logic) + " ";
     out += "LW " + to_string(r.width) + " LD " + to_string(r.depth) + " ";
-    out += "ID " + to_string(counter) + " S " + to_string(s) + " P " + to_string(p); 
-    out += " Type " + to_string(best_type+1) + " Mode " + r.mode;
+    out += "ID " + to_string(lp_maps[lp_index].physical_ram_id) + " S " + to_string(lp_maps[lp_index].s) + " P " + to_string(lp_maps[lp_index].p); 
+    out += " Type " + to_string(lp_maps[lp_index].type+1) + " Mode " + temp_mode;
     out += " W " + to_string(w) + " D " + to_string(d);
     
     checker_input << out;
     checker_input << endl;
-    counter++;
 }
 
 //map available logical RAMs to physical in Circuit c
@@ -478,12 +488,11 @@ void find_best_mapping(RAM r, int circuit_id){
     lp_map_temp.r_index = r.id;
     lp_map_temp.c_index = circuit_id;
     lp_map_temp.physical_ram_id = counter;
+    counter++;
     
     lp_maps.push_back(lp_map_temp);
     circuits[circuit_id].ram[r.id].lp_map_id = lp_maps_id;
     lp_maps_id++;
-    
-    write_checker_file(r,circuit_id,best_type,best_mode,LUT,best_s,best_p);
     
 }
 
@@ -544,6 +553,10 @@ void pack_leftovers(){
             //no leftover
             continue;
         }
+
+        if(circuits[c_index].ram[r_index].packed){//already packed with another rom git
+            continue;
+        }
         int max_ram_id_2 = -1;
         int max_ram_id_1 = -1;
         int max_depth_2 = INT_MAX;
@@ -551,15 +564,15 @@ void pack_leftovers(){
         int max_depth_1 = INT_MAX;
         int max_width_1 = INT_MAX;
         
-        cout << "===========================================================" << endl;
-        cout << lp_maps[i].width_left_1 << " " << lp_maps[i].depth_left_1 << endl;
-        cout << lp_maps[i].width_left_2 << " " << lp_maps[i].depth_left_2 << endl;
+        // cout << "===========================================================" << endl;
+        // cout << lp_maps[i].width_left_1 << " " << lp_maps[i].depth_left_1 << endl;
+        // cout << lp_maps[i].width_left_2 << " " << lp_maps[i].depth_left_2 << endl;
 
 
         for(int j = 0; j < circuits[lp_maps[i].c_index].ram.size(); j++){
             if(j == lp_maps[i].r_index){
-                cout << "current mapping" << endl;
-                cout << lp_maps[i].c_index << " " << lp_maps[i].r_index << endl;
+                // cout << "current mapping" << endl;
+                // cout << lp_maps[i].c_index << " " << lp_maps[i].r_index << endl;
                 continue; //current mapping
             }
             if(circuits[lp_maps[i].c_index].ram[j].mode != "ROM" && circuits[lp_maps[i].c_index].ram[j].mode != "SinglePort"){
@@ -600,35 +613,35 @@ void pack_leftovers(){
             }
         }
         if(max_ram_id_1 == -1 && max_ram_id_2 == -1){
-            cout << "no packing found!!" << endl;
+            // cout << "no packing found!!" << endl;
         }
         else{
-            cout << "FILLED WITH..." << endl;
+            // cout << "FILLED WITH..." << endl;
             int locate_ram_in_lp = 0;
             circuits[lp_maps[i].c_index].ram[lp_maps[i].r_index].packed = true;
             if(max_ram_id_1 == -1){//packing to fill leftover2
                 locate_ram_in_lp = circuits[lp_maps[i].c_index].ram[max_ram_id_2].lp_map_id; 
                 circuits[lp_maps[i].c_index].ram[max_ram_id_2].packed = true;
-                cout << lp_maps[i].c_index << " " << max_ram_id_2 << endl;
-                cout << max_width_2 << " " << max_depth_2 << endl;
+                // cout << lp_maps[i].c_index << " " << max_ram_id_2 << endl;
+                // cout << max_width_2 << " " << max_depth_2 << endl;
             }
             else if(max_ram_id_2 == -1){//packing to fill leftover1
                 locate_ram_in_lp = circuits[lp_maps[i].c_index].ram[max_ram_id_1].lp_map_id;
                 circuits[lp_maps[i].c_index].ram[max_ram_id_1].packed = true;
-                cout << lp_maps[i].c_index << " " << max_ram_id_1 << endl;
-                cout << max_width_1 << " " << max_depth_1 << endl;
+                // cout << lp_maps[i].c_index << " " << max_ram_id_1 << endl;
+                // cout << max_width_1 << " " << max_depth_1 << endl;
             }
             else if(max_depth_2 * max_width_2 < max_depth_1 * max_width_1){//pack to fill as bigger as possible
                 locate_ram_in_lp = circuits[lp_maps[i].c_index].ram[max_ram_id_1].lp_map_id;
                 circuits[lp_maps[i].c_index].ram[max_ram_id_1].packed = true;
-                cout << lp_maps[i].c_index << " " << max_ram_id_1 << endl;
-                cout << max_width_1 << " " << max_depth_1 << endl;
+                // cout << lp_maps[i].c_index << " " << max_ram_id_1 << endl;
+                // cout << max_width_1 << " " << max_depth_1 << endl;
             }
             else{
                 locate_ram_in_lp = circuits[lp_maps[i].c_index].ram[max_ram_id_2].lp_map_id;
                 circuits[lp_maps[i].c_index].ram[max_ram_id_2].packed = true;
-                cout << lp_maps[i].c_index << " " << max_ram_id_2 << endl;
-                cout << max_width_2 << " " << max_depth_2 << endl;
+                // cout << lp_maps[i].c_index << " " << max_ram_id_2 << endl;
+                // cout << max_width_2 << " " << max_depth_2 << endl;
             }
             
             lp_maps[locate_ram_in_lp].physical_ram_id = lp_maps[i].physical_ram_id;
@@ -650,8 +663,15 @@ int main(){
             find_best_mapping(circuits[i].ram[j],i);
         }
     }
+    
     cal_leftovers();
     pack_leftovers();
+
+    for(int i = 0; i < num_of_circuits; i++){
+        for(int j = 0; j < circuits[i].ram.size(); j++){
+            write_checker_file(circuits[i].ram[j],i);
+        }
+    }
     // cout << circuits[0].ram[109].width << " " << circuits[0].ram[109].depth << endl;
     // find_best_mapping(circuits[14].ram[0],14);
     return 0;
