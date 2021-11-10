@@ -10,7 +10,9 @@
 #define LUTRAM_MODE_1_WIDTH 20
 
 #define BRAM_8K_BITS 8192
+#define BRAM_8K_MAX_WIDTH 32
 #define BRAM_128K_BITS 131072
+#define BRAM_128K_MAX_WIDTH 128
 
 #define LUTRAM_AREA 4
 #define LUT_AREA 3.5
@@ -293,9 +295,9 @@ void find_best_mapping(RAM r, int circuit_id){
     int best_8KBRAM_mode = -1;
     int best_8KBRAM_p; 
     int best_8KBRAM_s;
-    for(int x = 1 ; x <= 32; x *= 2){
+    for(int x = 1 ; x <= BRAM_8K_MAX_WIDTH; x *= 2){
         //x32 is not available on TRUEDUALPORT mode!
-        if(r.mode == "TrueDualPort" && x == 32){
+        if(r.mode == "TrueDualPort" && x == BRAM_8K_MAX_WIDTH){
             continue;
         }
         int req_ram = ceil((double)r.width/x) * ceil((double)r.depth/(BRAM_8K_BITS/x));
@@ -344,9 +346,9 @@ void find_best_mapping(RAM r, int circuit_id){
     int best_128KBRAM_mode = -1;
     int best_128KBRAM_p;
     int best_128KBRAM_s;
-    for(int x = 1 ; x <= 32; x *= 2){
-        //x32 is not available on TRUEDUALPORT mode!
-        if(r.mode == "TrueDualPort" && x == 32){
+    for(int x = 1 ; x <= BRAM_128K_MAX_WIDTH; x *= 2){
+        //x128 is not available on TRUEDUALPORT mode!
+        if(r.mode == "TrueDualPort" && x == BRAM_128K_MAX_WIDTH){
             continue;
         }
         int req_ram = ceil((double)r.width/x) * ceil((double)r.depth/(BRAM_128K_BITS/x));
@@ -386,7 +388,7 @@ void find_best_mapping(RAM r, int circuit_id){
             }
         }
     }
-
+    
     //choose the best solution
     if(LUTRAM_required_area < 0){
         LUTRAM_required_area = DBL_MAX;
@@ -398,8 +400,8 @@ void find_best_mapping(RAM r, int circuit_id){
     int best_p;
     int best_s;
 
-    if(LUTRAM_required_area < required_BRAM8K){
-        if(LUTRAM_required_area <= required_BRAM128K){
+    if(LUTRAM_required_area < BRAM8K_required_area){
+        if(LUTRAM_required_area <= BRAM128K_required_area){
             best_area = LUTRAM_required_area;
             best_mode = best_LUTRAM_mode;
             best_type = 0;
@@ -407,8 +409,8 @@ void find_best_mapping(RAM r, int circuit_id){
             best_p = best_LUTRAM_p;
             best_s = best_LUTRAM_s;
         }
-        else if(required_BRAM128K < LUTRAM_required_area){
-            best_area = required_BRAM128K;
+        else if(BRAM128K_required_area < LUTRAM_required_area){
+            best_area = BRAM128K_required_area;
             best_mode = best_128KBRAM_mode;
             best_type = 2;
             LUT = required_BRAM128K_logic;
@@ -417,9 +419,9 @@ void find_best_mapping(RAM r, int circuit_id){
         }
     }
 
-    if(LUTRAM_required_area > required_BRAM8K){
-        if(required_BRAM8K <= required_BRAM128K){
-            best_area = required_BRAM8K;
+    if(LUTRAM_required_area > BRAM8K_required_area){
+        if(BRAM8K_required_area <= BRAM128K_required_area){
+            best_area = BRAM8K_required_area;
             best_mode = best_8KBRAM_mode;
             best_type = 1;
             LUT = required_BRAM8K_logic;
@@ -427,8 +429,8 @@ void find_best_mapping(RAM r, int circuit_id){
             best_s = best_8KBRAM_s;
 
         }
-        else if(required_BRAM8K > required_BRAM128K){
-            best_area = required_BRAM128K;
+        else if(BRAM8K_required_area > BRAM128K_required_area){
+            best_area = BRAM128K_required_area;
             best_mode = best_128KBRAM_mode;
             best_type = 2;
             LUT = required_BRAM128K_logic;
@@ -438,7 +440,6 @@ void find_best_mapping(RAM r, int circuit_id){
     }
 
     write_checker_file(r,circuit_id,best_type,best_mode,LUT,best_s,best_p);
-    
     
 }
 
@@ -451,6 +452,7 @@ int main(){
             find_best_mapping(circuits[i].ram[j],i);
         }
     }
-    // find_best_mapping(circuits[0].ram[0],0);
+    // cout << circuits[0].ram[109].width << " " << circuits[0].ram[109].depth << endl;
+    // find_best_mapping(circuits[14].ram[0],14);
     return 0;
 }
