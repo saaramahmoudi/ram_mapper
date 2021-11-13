@@ -79,17 +79,35 @@ int num_of_circuits;
 vector <LP_map> lp_maps;
 int lp_maps_id = 0;
 ofstream checker_input("checker_input.txt");
+bool* balance;
 int counter = 0;
 
 //init the circuits based on input file
 void init(){
     circuits = new Circuit[num_of_circuits];
+    balance = new bool[num_of_circuits];
     for(int i = 0; i < num_of_circuits; i++){
         circuits[i].num_of_LUTRAM = 0;
         circuits[i].num_of_8KBRAM = 0;
         circuits[i].num_of_128KBRAM = 0;
         circuits[i].num_of_logic_elements = 0;        
+        balance[i] = false;
     }
+    
+}
+
+
+
+//debug function
+void print_mapping(RAM r, int c_index){
+    int lp_index = r.lp_map_id;
+    cout << "============================================================" << endl;
+    cout << r.mode << endl;
+    cout << r.width << " " << r.depth << endl;
+    cout << "Mapped to .." << endl;
+    cout << lp_maps[lp_index].type+1 <<" " << lp_maps[lp_index].mode << endl;
+    cout << lp_maps[lp_index].s <<" " << lp_maps[lp_index].p << endl;
+
 }
 
 
@@ -222,8 +240,8 @@ Fit best_mapping_on_LUTRAM(RAM r, bool re_map){
     int required_LUTRAM_logic = -1;
     double LUTRAM_required_area = -1;
     int best_LUTRAM_mode = -1;
-    int best_LUTRAM_s;
-    int best_LUTRAM_p;
+    int best_LUTRAM_s = 0;
+    int best_LUTRAM_p = 0;
     if((r.mode == "SimpleDualPort" && !re_map) || (r.mode != "TrueDualPort" && re_map)){
         //LUTRAM MODE 0
         int lut_mode_0 = 0;
@@ -252,10 +270,11 @@ Fit best_mapping_on_LUTRAM(RAM r, bool re_map){
                 lut_mode_0 *= ceil((double)r.depth/LUTRAM_MODE_0_WORDS);
                 lut_mode_0_s = ceil((double)r.depth/LUTRAM_MODE_0_WORDS);
                 //mux logic
-                int num_of_mux = ceil((double)r.depth/LUTRAM_MODE_0_WORDS)/4 + 1;
+                int num_of_mux = ceil((double)r.depth/LUTRAM_MODE_0_WORDS/4) + 1;
                 if((int) ceil((double)r.depth/LUTRAM_MODE_0_WORDS) % 4 == 1){
                     num_of_mux--;           
                 }
+
                 lut_mode_0_logic += r.width * num_of_mux;
                 //decoder logic
                 int extra_rams = ceil((double)r.depth/LUTRAM_MODE_0_WORDS);
@@ -263,7 +282,7 @@ Fit best_mapping_on_LUTRAM(RAM r, bool re_map){
                     lut_mode_0_logic += 1; //only one LUT is required 
                 }
                 else{
-                    extra_rams = pow(2,ceil(log(extra_rams)/log(2)));
+                    // extra_rams = pow(2,ceil(log(extra_rams)/log(2)));
                     lut_mode_0_logic += extra_rams;
                 }
 
@@ -294,7 +313,7 @@ Fit best_mapping_on_LUTRAM(RAM r, bool re_map){
                 lut_mode_1 *= ceil((double)r.depth/LUTRAM_MODE_1_WORDS);
                 lut_mode_1_s = ceil((double)r.depth/LUTRAM_MODE_1_WORDS);
                 //mux logic
-                int num_of_mux = (ceil((double)r.depth/LUTRAM_MODE_1_WORDS)/4) + 1;
+                int num_of_mux = (ceil((double)r.depth/LUTRAM_MODE_1_WORDS/4)) + 1;
                 if((int) ceil((double)r.depth/LUTRAM_MODE_1_WORDS) % 4 == 1)
                     num_of_mux--;
                 
@@ -540,7 +559,7 @@ void find_best_mapping(RAM r, int circuit_id, bool re_map){
             best_s = BRAM128K_fit.s;
         }
     }
-
+    
     if(!re_map){
         LP_map lp_map_temp;
         lp_map_temp.type = best_type;
@@ -733,19 +752,26 @@ vector<LP_map> get_LUTRAMS(int circuit_id){
     return LUTRAMS;
 }
 
-void balance_mapping(){
+void balance_LUTRAM_to_BRAM(){
     for(int i = 0; i < num_of_circuits; i++){
+        
         vector<LP_map> LUTRAMS = get_LUTRAMS(i);
         sort(LUTRAMS.begin(),LUTRAMS.end(),compare_two_Logical_RAM);
         
         //calculate available resources
-        int avail_8KBRAM = floor(circuits[i].num_of_logic/10) - circuits[i].num_of_8KBRAM;
-        int avail_128KBRAM = floor(circuits[i].num_of_logic/300) - circuits[i].num_of_128KBRAM;
+        //max(circuits[i].num_of_logic + circuits[i].num_of_LUTRAM,2*circuits[i].num_of_LUTRAM)/300;
+        int avail_8KBRAM   = floor(circuits[i].num_of_logic/10);
+        int avail_128KBRAM = floor(circuits[i].num_of_logic/300);
         
-        if(circuits[i].num_of_8KBRAM < floor(circuits[i].num_of_logic/10) && circuits[i].num_of_128KBRAM < floor(circuits[i].num_of_logic/300)){
+        if(circuits[i].num_of_8KBRAM < avail_8KBRAM || circuits[i].num_of_128KBRAM < avail_128KBRAM){
+            //already used
+            avail_8KBRAM -= circuits[i].num_of_8KBRAM;
+            avail_128KBRAM -= circuits[i].num_of_128KBRAM;
+            balance[i] = true;
             for(int j = 0; j < LUTRAMS.size(); j++){
                 if(avail_8KBRAM == 0 && avail_128KBRAM == 0)
                     break;
+                
                 int moving_r_index = LUTRAMS[j].r_index;
                 Fit BRAM128K_fit = best_mapping_on_128KBRAM(circuits[i].ram[moving_r_index],true);
                 
@@ -779,18 +805,161 @@ void balance_mapping(){
                 }
             }
         }
+        // cout << "===================3===========================" << endl;
+
+        // cout << "LUTRAM " << circuits[i].num_of_LUTRAM << endl;
+        // cout << "8KBRAM " << circuits[i].num_of_8KBRAM << endl; 
+        // cout << "128KBRAM " << circuits[i].num_of_128KBRAM << endl;
+        // cout << "logic " << circuits[i].num_of_logic_elements << endl;
+        
     }
 }
 
-//debug function
-void print_mapping(RAM r, int c_index){
-    int lp_index = r.lp_map_id;
-    cout << "============================================================" << endl;
-    cout << r.mode << endl;
-    cout << r.width << " " << r.depth << endl;
-    cout << "Mapped to .." << endl;
-    cout << lp_maps[lp_index].type+1 <<" " << lp_maps[lp_index].mode << endl;
+bool compare_two_Logical_RAM_ascending(const LP_map &lp1, const LP_map &lp2){
+    int l1_width = circuits[lp1.c_index].ram[lp1.r_index].width;
+    int l1_depth = circuits[lp1.c_index].ram[lp1.r_index].depth;
 
+    int l2_width = circuits[lp2.c_index].ram[lp2.r_index].width;
+    int l2_depth = circuits[lp2.c_index].ram[lp2.r_index].depth;
+
+    return l1_width * l1_depth < l2_width * l2_depth;
+}
+
+
+vector<LP_map> get_BRAMS(int circuit_id, int type){
+    vector<LP_map> BRAMS;
+    for(int i = 0; i < lp_maps.size(); i++){
+        if(lp_maps[i].type != type || lp_maps[i].c_index < circuit_id)
+            continue;
+        if(lp_maps[i].c_index > circuit_id)
+            break;
+        else{
+            BRAMS.push_back(lp_maps[i]);
+        }
+    }
+    return BRAMS;
+}
+
+
+void balance_BRAM_to_LUTRAM(){
+    for(int i = 0; i < num_of_circuits; i++){
+        // if(balance[i])
+        //     continue;
+        // cout << "CIRCUIT NO " << i << endl;
+        // cout << "======================0==========================" << endl;
+        // cout << "LUTRAM " << circuits[i].num_of_LUTRAM << endl;
+        // cout << "8KBRAM " << circuits[i].num_of_8KBRAM << endl; 
+        // cout << "128KBRAM " << circuits[i].num_of_128KBRAM << endl;
+        // cout << "logic " << circuits[i].num_of_logic_elements << endl;
+        // vector<LP_map> BRAMS8K = get_BRAMS(i,1);
+        vector<LP_map> BRAMS128K = get_BRAMS(i,2);
+        sort(BRAMS128K.begin(),BRAMS128K.end(),compare_two_Logical_RAM_ascending);
+        int avail_logic = (circuits[i].num_of_128KBRAM * 300)/2 + (circuits[i].num_of_8KBRAM * 10)/2;
+        
+        if(circuits[i].num_of_LUTRAM < avail_logic){
+            //already used
+            avail_logic -= circuits[i].num_of_LUTRAM;
+            for(int j = 0; j < BRAMS128K.size(); j++){
+                if(avail_logic <= 0)
+                    break;
+                
+                //move from BRAM128K TO LUTRAM
+                int moving_r_index = BRAMS128K[j].r_index;
+
+                if(circuits[i].ram[moving_r_index].mode == "TrueDualPort" || circuits[i].ram[moving_r_index].packed)
+                    continue;
+
+                Fit LUTRAM_fit = best_mapping_on_LUTRAM(circuits[i].ram[moving_r_index],true);
+                if(LUTRAM_fit.s * LUTRAM_fit.p <= avail_logic && LUTRAM_fit.s * LUTRAM_fit.p != 0){
+                    int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
+                    lp_maps[lp_index].type = LUTRAM_fit.type;
+                    lp_maps[lp_index].mode = LUTRAM_fit.mode;
+                    lp_maps[lp_index].s = LUTRAM_fit.s;
+                    lp_maps[lp_index].p = LUTRAM_fit.p;
+                    lp_maps[lp_index].additional_logic = LUTRAM_fit.req_logic;
+                    //increase the number of BRAM128K
+                    circuits[i].num_of_LUTRAM += LUTRAM_fit.s * LUTRAM_fit.p;
+                    circuits[i].num_of_128KBRAM -= BRAMS128K[j].s * BRAMS128K[j].p;
+                    // print_mapping(circuits[i].ram[moving_r_index],i);
+                    avail_logic = (circuits[i].num_of_128KBRAM * 300)/2 + (circuits[i].num_of_8KBRAM * 10)/2- circuits[i].num_of_LUTRAM;
+                    // cout << "======================1==========================" << endl;
+                    // cout << "MOVING FROM 128K TO LUTRAM" << endl; 
+                    // cout << "AVAILABLE LOGIC " << avail_logic << endl;
+                    // cout << "Num of LUTRAM " <<  circuits[i].num_of_LUTRAM << endl;
+                    continue;
+                }
+                Fit BRAM8K_fit = best_mapping_on_8KBRAM(circuits[i].ram[moving_r_index],true);
+                
+                if(BRAM8K_fit.s * BRAM8K_fit.p <= avail_logic && BRAM8K_fit.s * BRAM8K_fit.p != 0){
+                    int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
+                    lp_maps[lp_index].type = BRAM8K_fit.type;
+                    lp_maps[lp_index].mode = BRAM8K_fit.mode;
+                    lp_maps[lp_index].s = BRAM8K_fit.s;
+                    lp_maps[lp_index].p = BRAM8K_fit.p;
+                    lp_maps[lp_index].additional_logic = BRAM8K_fit.req_logic;
+                    //increase the number of BRAM128K
+                    circuits[i].num_of_8KBRAM += BRAM8K_fit.s * BRAM8K_fit.p;
+                    circuits[i].num_of_128KBRAM -= BRAMS128K[j].s * BRAMS128K[j].p;
+                    // print_mapping(circuits[i].ram[moving_r_index],i);
+                    avail_logic = (circuits[i].num_of_128KBRAM * 300)/2 + (circuits[i].num_of_8KBRAM * 10)/2- circuits[i].num_of_LUTRAM;
+                    // cout << "======================1==========================" << endl;
+                    // cout << "MOVING FROM 128K TO LUTRAM" << endl; 
+                    // cout << "AVAILABLE LOGIC " << avail_logic << endl;
+                    // cout << "Num of LUTRAM " <<  circuits[i].num_of_LUTRAM << endl;
+                    continue;
+                }
+            }
+        }
+        // cout << "======================1==========================" << endl;
+        // cout << "LUTRAM " << circuits[i].num_of_LUTRAM << endl;
+        // cout << "8KBRAM " << circuits[i].num_of_8KBRAM << endl; 
+        // cout << "128KBRAM " << circuits[i].num_of_128KBRAM << endl;
+        // cout << "logic " << circuits[i].num_of_logic_elements << endl;
+        // cout << "======================2========================" << endl;
+        if(avail_logic > 0){
+            vector<LP_map> BRAMS8K = get_BRAMS(i,1);
+            sort(BRAMS8K.begin(),BRAMS8K.end(),compare_two_Logical_RAM_ascending);
+            
+            if(circuits[i].num_of_LUTRAM < avail_logic){
+                for(int j = 0; j < BRAMS8K.size(); j++){
+                    if(avail_logic <= 0)
+                        break;
+                    
+                    //move from BRAM128K TO LUTRAM
+                    int moving_r_index = BRAMS8K[j].r_index;
+
+                    if(circuits[i].ram[moving_r_index].mode == "TrueDualPort" || circuits[i].ram[moving_r_index].packed)
+                        continue;
+
+                    Fit LUTRAM_fit = best_mapping_on_LUTRAM(circuits[i].ram[moving_r_index],true);
+                    if(LUTRAM_fit.s * LUTRAM_fit.p <= avail_logic && LUTRAM_fit.s * LUTRAM_fit.p != 0){
+                        int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
+                        lp_maps[lp_index].type = LUTRAM_fit.type;
+                        lp_maps[lp_index].mode = LUTRAM_fit.mode;
+                        lp_maps[lp_index].s = LUTRAM_fit.s;
+                        lp_maps[lp_index].p = LUTRAM_fit.p;
+                        lp_maps[lp_index].additional_logic = LUTRAM_fit.req_logic;
+                        //increase the number of BRAM128K
+                        circuits[i].num_of_LUTRAM += LUTRAM_fit.s * LUTRAM_fit.p;
+                        circuits[i].num_of_8KBRAM -= BRAMS8K[j].s * BRAMS8K[j].p;
+                        // print_mapping(circuits[i].ram[moving_r_index],i);
+                        avail_logic = (circuits[i].num_of_8KBRAM * 10)/2 + (circuits[i].num_of_128KBRAM * 300)/2 - circuits[i].num_of_LUTRAM; 
+
+                        // cout << "========================2========================" << endl;
+                        // cout << "MOVING FROM 8K TO LUTRAM" << endl; 
+                        // cout << "AVAILABLE LOGIC " << avail_logic << endl;
+                        // cout << "Num of LUTRAM " <<  circuits[i].num_of_LUTRAM << endl;
+
+                        continue;
+                    }
+                }
+            }
+        }
+        // cout << "LUTRAM " << circuits[i].num_of_LUTRAM << endl;
+        // cout << "8KBRAM " << circuits[i].num_of_8KBRAM << endl; 
+        // cout << "128KBRAM " << circuits[i].num_of_128KBRAM << endl;
+        // cout << "logic " << circuits[i].num_of_logic_elements << endl;
+    }
 }
 
 
@@ -802,7 +971,7 @@ int main(){
         for(int j = 0; j < circuits[i].ram.size(); j++){
             find_best_mapping(circuits[i].ram[j],i,false);
         }
-        //print usage
+        // // print usage
         // cout << "Circuit no: " << i << " -> " << endl;  
         // cout << "LUTRAM " << circuits[i].num_of_LUTRAM << endl;
         // cout << "8KBRAM " << circuits[i].num_of_8KBRAM << endl; 
@@ -824,19 +993,22 @@ int main(){
     //     cout << "==============================================" << endl;
     // }
     
+    // cout << "BALANCING************************************************************************" << endl;
+    balance_BRAM_to_LUTRAM();
+    balance_LUTRAM_to_BRAM();
     
-    balance_mapping();
 
-
-    // for(int i = 0 ; i < num_of_circuits; i++){
-    //     //print usage
-    //     cout << "Circuit no: " << i << " -> " << endl;  
-    //     cout << "LUTRAM " << circuits[i].num_of_LUTRAM << endl;
-    //     cout << "8KBRAM " << circuits[i].num_of_8KBRAM << endl; 
-    //     cout << "128KBRAM " << circuits[i].num_of_128KBRAM << endl;
-    //     cout << "logic " << circuits[i].num_of_logic_elements << endl;
-    //     cout << "==============================================" << endl;
-    // }
+    
+    for(int i = 0 ; i < num_of_circuits; i++){
+        //print usage
+        cout << "Circuit no: " << i << " -> " << endl;  
+        cout << "LUTRAM " << circuits[i].num_of_LUTRAM << endl;
+        cout << "8KBRAM " << circuits[i].num_of_8KBRAM << endl; 
+        cout << "128KBRAM " << circuits[i].num_of_128KBRAM << endl;
+        cout << "logic " << circuits[i].num_of_logic_elements << endl;
+        cout << "==============================================" << endl;
+    }
+    
     // cout << "**************************************************************" << endl;
     // cout << "PACKING DONE...!" << endl;
     // cout << "**************************************************************" << endl;
