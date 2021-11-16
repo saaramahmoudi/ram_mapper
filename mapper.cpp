@@ -970,43 +970,89 @@ void balance_128KBRAM(){
         for(int j = 0; j < BRAMS128K.size(); j++){
             
             update_LUT_number(i);
-            if(avail_8KBRAM <= 0 || circuits[i].util_8KBRAM >= circuits[i].util_128KBRAM)
+            if((circuits[i].util_8KBRAM >= circuits[i].util_128KBRAM && circuits[i].util_LUT >= circuits[i].util_128KBRAM))
                 break;
             
             //move from BRAM128K TO LUTRAM
             int moving_r_index = BRAMS128K[j].r_index;
 
-            if( circuits[i].ram[moving_r_index].packed)
+            if(circuits[i].ram[moving_r_index].packed)
                 continue;
             
             Fit BRAM8K_fit = best_mapping_on_8KBRAM(circuits[i].ram[moving_r_index],true);
+            Fit LUTRAM_fit = best_mapping_on_LUTRAM(circuits[i].ram[moving_r_index],true);
+
+            int move = 0;
             
-            if(BRAM8K_fit.s * BRAM8K_fit.p <= avail_8KBRAM && BRAM8K_fit.s * BRAM8K_fit.p != 0){
-                
-                //increase the number of BRAM128K
-                circuits[i].num_of_8KBRAM += BRAM8K_fit.s * BRAM8K_fit.p;
-                circuits[i].num_of_128KBRAM -= BRAMS128K[j].s * BRAMS128K[j].p;
+            if(circuits[i].ram[BRAMS128K[j].r_index].mode == "TrueDualPort" || LUTRAM_fit.req_area == -1){
+               move =  0;
+            }
+            else if(circuits[i].util_LUT < circuits[i].util_128KBRAM){
+                move = 1;
+            }
 
-                update_LUT_number(i);
-                avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
-                
 
-                if(avail_8KBRAM >= 0){
-                    int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
-                    lp_maps[lp_index].type = BRAM8K_fit.type;
-                    lp_maps[lp_index].mode = BRAM8K_fit.mode;
-                    lp_maps[lp_index].s = BRAM8K_fit.s;
-                    lp_maps[lp_index].p = BRAM8K_fit.p;
-                    lp_maps[lp_index].additional_logic = BRAM8K_fit.req_logic;
-                    continue;
-                }
-                else{
-                    circuits[i].num_of_8KBRAM -= BRAM8K_fit.s * BRAM8K_fit.p;
-                    circuits[i].num_of_128KBRAM += BRAMS128K[j].s * BRAMS128K[j].p;
+            if(move == 1){
+                if(LUTRAM_fit.s * LUTRAM_fit.p <= avail_logic && LUTRAM_fit.s * LUTRAM_fit.p != 0){
+                
+                    circuits[i].num_of_LUTRAM += LUTRAM_fit.s * LUTRAM_fit.p;
+                    circuits[i].num_of_8KBRAM -= BRAMS128K[j].s * BRAMS128K[j].p;
+
                     update_LUT_number(i);
                     avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
                     avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
+                    
+
+                    if(avail_logic >= 0){
+                        int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
+                        lp_maps[lp_index].type = LUTRAM_fit.type;
+                        lp_maps[lp_index].mode = LUTRAM_fit.mode;
+                        lp_maps[lp_index].s = LUTRAM_fit.s;
+                        lp_maps[lp_index].p = LUTRAM_fit.p;
+                        lp_maps[lp_index].additional_logic = LUTRAM_fit.req_logic;
+                        continue;
+                    }
+                    
+                    else{
+                        circuits[i].num_of_LUTRAM -= LUTRAM_fit.s * LUTRAM_fit.p;
+                        circuits[i].num_of_8KBRAM += BRAMS128K[j].s * BRAMS128K[j].p;
+                        update_LUT_number(i);
+                        avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
+                        avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
+
+                    }  
+                }
+            }
+
+
+            if(move == 0){      
+                if(BRAM8K_fit.s * BRAM8K_fit.p <= avail_8KBRAM && BRAM8K_fit.s * BRAM8K_fit.p != 0){
+                    
+                    //increase the number of BRAM128K
+                    circuits[i].num_of_8KBRAM += BRAM8K_fit.s * BRAM8K_fit.p;
+                    circuits[i].num_of_128KBRAM -= BRAMS128K[j].s * BRAMS128K[j].p;
+
+                    update_LUT_number(i);
+                    avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
+                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
+                    
+
+                    if(avail_8KBRAM >= 0){
+                        int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
+                        lp_maps[lp_index].type = BRAM8K_fit.type;
+                        lp_maps[lp_index].mode = BRAM8K_fit.mode;
+                        lp_maps[lp_index].s = BRAM8K_fit.s;
+                        lp_maps[lp_index].p = BRAM8K_fit.p;
+                        lp_maps[lp_index].additional_logic = BRAM8K_fit.req_logic;
+                        continue;
+                    }
+                    else{
+                        circuits[i].num_of_8KBRAM -= BRAM8K_fit.s * BRAM8K_fit.p;
+                        circuits[i].num_of_128KBRAM += BRAMS128K[j].s * BRAMS128K[j].p;
+                        update_LUT_number(i);
+                        avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
+                        avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
+                    }
                 }
             }
         }
@@ -1034,7 +1080,7 @@ void balance_8KBRAM(){
         for(int j = 0; j < BRAMS8K.size(); j++){
             
             update_LUT_number(i);
-            if(avail_128KBRAM <= 0 || (circuits[i].util_128KBRAM >= circuits[i].util_8KBRAM && circuits[i].util_LUT >= circuits[i].util_8KBRAM))
+            if((circuits[i].util_128KBRAM >= circuits[i].util_8KBRAM && circuits[i].util_LUT >= circuits[i].util_8KBRAM))
                 break;
             
             //move from BRAM128K TO LUTRAM
@@ -1080,7 +1126,7 @@ void balance_8KBRAM(){
                         circuits[i].num_of_8KBRAM += BRAMS8K[j].s * BRAMS8K[j].p;
                         update_LUT_number(i);
                         avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                        avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_128KBRAM;
+                        avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
 
                     }  
                 }
@@ -1112,7 +1158,7 @@ void balance_8KBRAM(){
                         circuits[i].num_of_8KBRAM += BRAMS8K[j].s * BRAMS8K[j].p;
                         update_LUT_number(i);
                         avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                        avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_128KBRAM;
+                        avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
                     }  
                 }
             }
@@ -1130,6 +1176,7 @@ int main(){
             find_best_mapping(circuits[i].ram[j],i,false);
         }
     }
+    
     cal_leftovers();
     pack_leftovers();
 
@@ -1143,6 +1190,8 @@ int main(){
         balance_8KBRAM();
     }
     
+    
+
     cout << "===================================================BALANCE===========================================" << endl;
     get_memory_utilization();
     
