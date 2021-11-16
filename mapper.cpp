@@ -21,6 +21,9 @@
 #define BRAM_8K_AREA 9.6505
 #define BRAM_128K_AREA 73.5343
 
+#define BRAM_8K_RATIO 10
+#define BRAM_128K_RATIO 300
+
 using namespace std;
 
 struct RAM{
@@ -52,6 +55,7 @@ struct Circuit{
 
 };
 
+//A map from a logical RAM to physical one
 struct Fit{
     int type;
     int req_logic;
@@ -61,6 +65,7 @@ struct Fit{
     int mode;
 };
 
+//holds the whole mapping 
 struct LP_map{
     int r_index;//RAM id
     int c_index;//circuit id
@@ -110,27 +115,12 @@ void init(){
     
 }
 
-
-
-//debug function
-void print_mapping(RAM r, int c_index){
-    int lp_index = r.lp_map_id;
-    cout << "============================================================" << endl;
-    cout << r.mode << endl;
-    cout << r.width << " " << r.depth << endl;
-    cout << "Mapped to .." << endl;
-    cout << lp_maps[lp_index].type+1 <<" " << lp_maps[lp_index].mode << endl;
-    cout << lp_maps[lp_index].s <<" " << lp_maps[lp_index].p << endl;
-
-}
-
-
-//print utilization
+//calculate utilization for each circuit
 void get_memory_utilization(){  
     for(int i = 0 ;  i < num_of_circuits; i++){
         
-        int lut_by_8KBRAM = circuits[i].num_of_8KBRAM * 10;
-        int lut_by_128KBRAM = circuits[i].num_of_128KBRAM * 300;
+        int lut_by_8KBRAM = circuits[i].num_of_8KBRAM * BRAM_8K_RATIO;
+        int lut_by_128KBRAM = circuits[i].num_of_128KBRAM * BRAM_128K_RATIO;
         int lut_block = max(circuits[i].num_of_logic + circuits[i].num_of_LUTRAM, 2 * circuits[i].num_of_LUTRAM);
 
         if(lut_block >= lut_by_128KBRAM && lut_block >= lut_by_8KBRAM){
@@ -147,14 +137,14 @@ void get_memory_utilization(){
         
 
         circuits[i].util_LUT = (double) (circuits[i].num_of_LUTRAM + circuits[i].num_of_logic)/LUT_in_circuit[i]; 
-        circuits[i].util_8KBRAM = (double) (circuits[i].num_of_8KBRAM/ (ceil((double) LUT_in_circuit[i] / 10)));         
-        circuits[i].util_128KBRAM = (double) (circuits[i].num_of_128KBRAM/ (ceil((double) LUT_in_circuit[i] / 300)));         
+        circuits[i].util_8KBRAM = (double) (circuits[i].num_of_8KBRAM/ (ceil((double) LUT_in_circuit[i] / BRAM_8K_RATIO)));         
+        circuits[i].util_128KBRAM = (double) (circuits[i].num_of_128KBRAM/ (ceil((double) LUT_in_circuit[i] / BRAM_128K_RATIO)));         
 
         if(circuits[i].util_LUT < 0.9 || circuits[i].util_8KBRAM < 0.9 || circuits[i].util_128KBRAM < 0.9){
             cout << "CIRCUIT NO : " << i << endl;
             cout << "TOTAL NUMBER OF LUT BLOCKS " << LUT_in_circuit[i] << " ,USED LUT : " << circuits[i].num_of_LUTRAM + circuits[i].num_of_logic << endl;
-            cout << "TOTAL NUMBER OF 8KBRAM " << ceil((double)LUT_in_circuit[i]/10) << " ,USED 8KBRAM : " << circuits[i].num_of_8KBRAM << endl;
-            cout << "TOTAL NUMBER OF 128KBRAM " << ceil((double)LUT_in_circuit[i]/300) << " ,USED 128KBRAM : " << circuits[i].num_of_128KBRAM << endl;
+            cout << "TOTAL NUMBER OF 8KBRAM " << ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) << " ,USED 8KBRAM : " << circuits[i].num_of_8KBRAM << endl;
+            cout << "TOTAL NUMBER OF 128KBRAM " << ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) << " ,USED 128KBRAM : " << circuits[i].num_of_128KBRAM << endl;
             cout << "LUT UTILIZATION " << circuits[i].util_LUT << endl;
             cout << "8KBRAM UTILIZATION " << circuits[i].util_8KBRAM << endl;    
             cout << "128KBRAM UTILIZATION " << circuits[i].util_128KBRAM << endl;
@@ -662,11 +652,13 @@ void find_best_mapping(RAM r, int circuit_id, bool re_map){
 }
 
 
+//Check if we can put more than one logical RAM within a physical RAM
 void cal_leftovers(){
     for(int i = 0; i < lp_maps.size(); i++){   
         int c_index = lp_maps[i].c_index;
         int r_index = lp_maps[i].r_index;
 
+        //only single port RAM and ROM can be mapped within a same physical RAM
         if(circuits[c_index].ram[r_index].mode != "ROM" && circuits[c_index].ram[r_index].mode != "SinglePort")
             continue;
         
@@ -675,6 +667,7 @@ void cal_leftovers(){
 
         int physical_ram_width;
         int physical_ram_depth;
+        
         switch(lp_maps[i].type){          
             case 1:
                 physical_ram_width = lp_maps[i].mode;
@@ -689,8 +682,6 @@ void cal_leftovers(){
                 physical_ram_depth = 0;
                 break;
         }
-        
-
 
         physical_ram_width = lp_maps[i].p * (physical_ram_width);
         physical_ram_depth = lp_maps[i].s * (physical_ram_depth);
@@ -704,7 +695,7 @@ void cal_leftovers(){
     } 
 }
 
-
+//Move the best candidate to share a physical RAM
 void pack_leftovers(){
     for(int i = 0; i < lp_maps.size(); i++){
         
@@ -740,12 +731,7 @@ void pack_leftovers(){
             
             //leftover2
             int next_power_2_d = pow(2,ceil(log(l_d)/log(2)));
-            // if(c_index == 19 && lp_maps[i].r_index == 42){
-            //     cout << "next power 2" <<   next_power_2_d << endl;
-            // }
             if(l_w <= lp_maps[i].width_left_2 && next_power_2_d <= lp_maps[i].depth_left_2 && !circuits[lp_maps[i].c_index].ram[j].packed){
-                // cout << " SECOND LEFTOVER CANDIDATES... " << endl;
-                // cout << c_index << " " << j << endl;
                 if(max_depth_2 == INT_MAX && max_width_2 == INT_MAX){
                     max_depth_2 = l_d;
                     max_width_2 = l_w;
@@ -758,7 +744,7 @@ void pack_leftovers(){
                 }
             }
         }
-        if(max_ram_id_2 == -1){
+        if(max_ram_id_2 == -1){ //no candidate has been found
             continue;
         }
         else{
@@ -773,6 +759,7 @@ void pack_leftovers(){
                 default: break;
             }
 
+            //change the mapping structure to the shared physical RAM
             circuits[lp_maps[i].c_index].ram[lp_maps[i].r_index].packed = true;
             circuits[lp_maps[i].c_index].ram[max_ram_id_2].packed = true;
             lp_maps[locate_ram_in_lp].physical_ram_id = lp_maps[i].physical_ram_id;
@@ -785,6 +772,7 @@ void pack_leftovers(){
     }
 }
 
+//Descending order
 bool compare_two_Logical_RAM(const LP_map &lp1, const LP_map &lp2){
     int l1_width = circuits[lp1.c_index].ram[lp1.r_index].width;
     int l1_depth = circuits[lp1.c_index].ram[lp1.r_index].depth;
@@ -796,6 +784,7 @@ bool compare_two_Logical_RAM(const LP_map &lp1, const LP_map &lp2){
 }
 
 
+//returns logical RAMs mapped to LUTRAMs within a circuit 
 vector<LP_map> get_LUTRAMS(int circuit_id){
     vector<LP_map> LUTRAMS;
     for(int i = 0; i < lp_maps.size(); i++){
@@ -811,9 +800,10 @@ vector<LP_map> get_LUTRAMS(int circuit_id){
 }
 
 
+//update the available resources
 void update_LUT_number(int c_index){
-    int lut_by_8KBRAM = circuits[c_index].num_of_8KBRAM * 10;
-    int lut_by_128KBRAM = circuits[c_index].num_of_128KBRAM * 300;
+    int lut_by_8KBRAM = circuits[c_index].num_of_8KBRAM * BRAM_8K_RATIO;
+    int lut_by_128KBRAM = circuits[c_index].num_of_128KBRAM * BRAM_128K_RATIO;
     int lut_block = max(circuits[c_index].num_of_logic + circuits[c_index].num_of_LUTRAM, 2 * circuits[c_index].num_of_LUTRAM);
 
     if(lut_block >= lut_by_128KBRAM && lut_block >= lut_by_8KBRAM){
@@ -827,46 +817,51 @@ void update_LUT_number(int c_index){
     }
 
     circuits[c_index].util_LUT = (double) (circuits[c_index].num_of_LUTRAM + circuits[c_index].num_of_logic)/LUT_in_circuit[c_index]; 
-    circuits[c_index].util_8KBRAM = (double) (circuits[c_index].num_of_8KBRAM/ (ceil((double) LUT_in_circuit[c_index] / 10)));         
-    circuits[c_index].util_128KBRAM = (double) (circuits[c_index].num_of_128KBRAM/ (ceil((double) LUT_in_circuit[c_index] / 300)));   
+    circuits[c_index].util_8KBRAM = (double) (circuits[c_index].num_of_8KBRAM/ (ceil((double) LUT_in_circuit[c_index] / BRAM_8K_RATIO)));         
+    circuits[c_index].util_128KBRAM = (double) (circuits[c_index].num_of_128KBRAM/ (ceil((double) LUT_in_circuit[c_index] / BRAM_128K_RATIO)));   
 }
 
-
+//move from LUTRAM to 28KBRAM/8KBRAM
 void balance_LUTRAM_to_BRAM(){
+    //loop over all circuits
     for(int i = 0; i < num_of_circuits; i++){
-        
         if(circuits[i].util_LUT <= circuits[i].util_8KBRAM || circuits[i].util_LUT <= circuits[i].util_128KBRAM)
             continue;
 
         balance[i] = true;
 
+        //get the logical RAMs mapped to LUTRAM and sort them
         vector<LP_map> LUTRAMS = get_LUTRAMS(i);
         sort(LUTRAMS.begin(),LUTRAMS.end(),compare_two_Logical_RAM);
-        
+
+        //calculate the number of available resources to move from LUTRAM to these resources
         update_LUT_number(i);
-        int avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
-        int avail_128KBRAM = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
+        int avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) - circuits[i].num_of_8KBRAM;
+        int avail_128KBRAM = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
     
+        //loop over the candidates 
         for(int j = 0; j < LUTRAMS.size(); j++){
+            //if nothing left to fill break the process
             if(avail_8KBRAM == 0 && avail_128KBRAM == 0)
                 break;
 
-            
-            
             int moving_r_index = LUTRAMS[j].r_index;
             Fit BRAM128K_fit = best_mapping_on_128KBRAM(circuits[i].ram[moving_r_index],true);
+            Fit BRAM8K_fit = best_mapping_on_8KBRAM(circuits[i].ram[moving_r_index],true);
             
             if(BRAM128K_fit.s * BRAM128K_fit.p <= avail_128KBRAM){
                 //increase the number of BRAM128K
                 circuits[i].num_of_128KBRAM += BRAM128K_fit.s * BRAM128K_fit.p;
+                //reducing the number of LUTRAM
                 circuits[i].num_of_LUTRAM -= LUTRAMS[j].s * LUTRAMS[j].p;
                 
+                //update since number of resources changed
                 update_LUT_number(i);
-                avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
-                avail_128KBRAM = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
-
+                avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) - circuits[i].num_of_8KBRAM;
+                avail_128KBRAM = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
 
                 if(avail_128KBRAM >= 0 && circuits[i].util_128KBRAM < circuits[i].util_LUT){
+                    //moving process - update the mapping structure
                     int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
                     lp_maps[lp_index].type = BRAM128K_fit.type;
                     lp_maps[lp_index].mode = BRAM128K_fit.mode;
@@ -876,28 +871,27 @@ void balance_LUTRAM_to_BRAM(){
                     continue;
                 }
                 else{
+                    //if moving is not possible, redo the changes
                     circuits[i].num_of_128KBRAM -= BRAM128K_fit.s * BRAM128K_fit.p;
                     circuits[i].num_of_LUTRAM += LUTRAMS[j].s * LUTRAMS[j].p;
                     update_LUT_number(i);
-                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
-                    avail_128KBRAM = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
+                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) - circuits[i].num_of_8KBRAM;
+                    avail_128KBRAM = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
                 }
-
             }
-            
-            Fit BRAM8K_fit = best_mapping_on_8KBRAM(circuits[i].ram[moving_r_index],true);
             if(BRAM8K_fit.s * BRAM8K_fit.p <= avail_8KBRAM){
-                
+                //increase the number of BRAM8K
                 circuits[i].num_of_8KBRAM += BRAM8K_fit.s * BRAM8K_fit.p;
+                //reducing the number of LUTRAM
                 circuits[i].num_of_LUTRAM -= LUTRAMS[j].s * LUTRAMS[j].p;
                 
+                //update since number of resources changed
                 update_LUT_number(i);
-                avail_8KBRAM   = ceil((double)(LUT_in_circuit[i]/10)) - circuits[i].num_of_8KBRAM;
-                avail_128KBRAM = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
-
-                
+                avail_8KBRAM   = ceil((double)(LUT_in_circuit[i]/BRAM_8K_RATIO)) - circuits[i].num_of_8KBRAM;
+                avail_128KBRAM = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
 
                 if(avail_8KBRAM >= 0 && circuits[i].util_8KBRAM < circuits[i].util_LUT){
+                    //moving process - update the mapping structure
                     int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
                     lp_maps[lp_index].type = BRAM8K_fit.type;
                     lp_maps[lp_index].mode = BRAM8K_fit.mode;
@@ -907,21 +901,19 @@ void balance_LUTRAM_to_BRAM(){
                     continue;
                 }
                 else{
+                    //if moving is not possible, redo the changes
                     circuits[i].num_of_8KBRAM -= BRAM8K_fit.s * BRAM8K_fit.p;
                     circuits[i].num_of_LUTRAM += LUTRAMS[j].s * LUTRAMS[j].p;
                     update_LUT_number(i);
-                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
-                    avail_128KBRAM = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
-                
-                }
-
-                
+                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) - circuits[i].num_of_8KBRAM;
+                    avail_128KBRAM = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
+                }  
             }
         }
-        
     }
 }
 
+//Ascending order
 bool compare_two_Logical_RAM_ascending(const LP_map &lp1, const LP_map &lp2){
     int l1_width = circuits[lp1.c_index].ram[lp1.r_index].width;
     int l1_depth = circuits[lp1.c_index].ram[lp1.r_index].depth;
@@ -932,7 +924,9 @@ bool compare_two_Logical_RAM_ascending(const LP_map &lp1, const LP_map &lp2){
     return l1_width * l1_depth < l2_width * l2_depth;
 }
 
-
+//returns logical RAMs mapped to BRAM within a circuit
+//type 1 : 8KBRAM 
+//type 2 : 128KBRAM 
 vector<LP_map> get_BRAMS(int circuit_id, int type){
     vector<LP_map> BRAMS;
     for(int i = 0; i < lp_maps.size(); i++){
@@ -947,63 +941,68 @@ vector<LP_map> get_BRAMS(int circuit_id, int type){
     return BRAMS;
 }
 
-
+//move from 128KBRAM to LUTRAM/8KBRAM
 void balance_128KBRAM(){
+    //loop over all circuits
     for(int i = 0; i < num_of_circuits; i++){
-        
-        if(circuits[i].util_128KBRAM <= circuits[i].util_8KBRAM)
-            continue;
-
+        //if the circuit is already balanced, continue
         if(balance[i])
             continue;
 
+        //no need to move from 128K to other RAMs
+        if(circuits[i].util_128KBRAM <= circuits[i].util_8KBRAM || circuits[i].util_128KBRAM <= circuits[i].util_LUT)
+            continue;
+        
         balance[i] = true;
 
-
+        //get the logical RAMs mapped to 128KBRAM and sort them
         vector<LP_map> BRAMS128K = get_BRAMS(i,2);
         sort(BRAMS128K.begin(),BRAMS128K.end(),compare_two_Logical_RAM_ascending);
         
-        update_LUT_number(i);
+        //calculate the number of available resources to move from BRAM128 to these resources
         int avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
         int avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
         
         for(int j = 0; j < BRAMS128K.size(); j++){
-            
-            update_LUT_number(i);
+            //no need to keep moving since it becomes balanced
             if((circuits[i].util_8KBRAM >= circuits[i].util_128KBRAM && circuits[i].util_LUT >= circuits[i].util_128KBRAM))
                 break;
             
-            //move from BRAM128K TO LUTRAM
             int moving_r_index = BRAMS128K[j].r_index;
 
             if(circuits[i].ram[moving_r_index].packed)
                 continue;
             
+            
             Fit BRAM8K_fit = best_mapping_on_8KBRAM(circuits[i].ram[moving_r_index],true);
             Fit LUTRAM_fit = best_mapping_on_LUTRAM(circuits[i].ram[moving_r_index],true);
 
+            //choose where to move
             int move = 0;
             
             if(circuits[i].ram[BRAMS128K[j].r_index].mode == "TrueDualPort" || LUTRAM_fit.req_area == -1){
-               move =  0;
+               move =  0; //can not be mapped on LUTRAM
             }
             else if(circuits[i].util_LUT < circuits[i].util_128KBRAM){
-                move = 1;
+                move = 1; //move to LUTRAM
             }
 
 
-            if(move == 1){
+            if(move == 1){ // move to LUTRAM
                 if(LUTRAM_fit.s * LUTRAM_fit.p <= avail_logic && LUTRAM_fit.s * LUTRAM_fit.p != 0){
-                
+                    //increase the number of LUTRAM
                     circuits[i].num_of_LUTRAM += LUTRAM_fit.s * LUTRAM_fit.p;
+                    //decrease the number of 128KBRAM
                     circuits[i].num_of_8KBRAM -= BRAMS128K[j].s * BRAMS128K[j].p;
 
+                    //update needed since the resources changed
                     update_LUT_number(i);
                     avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
+                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) - circuits[i].num_of_8KBRAM;
                     
 
                     if(avail_logic >= 0){
+                        //moving process, updating the mapping structure
                         int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
                         lp_maps[lp_index].type = LUTRAM_fit.type;
                         lp_maps[lp_index].mode = LUTRAM_fit.mode;
@@ -1014,30 +1013,33 @@ void balance_128KBRAM(){
                     }
                     
                     else{
+                        //if not possible, redo the changes
                         circuits[i].num_of_LUTRAM -= LUTRAM_fit.s * LUTRAM_fit.p;
                         circuits[i].num_of_8KBRAM += BRAMS128K[j].s * BRAMS128K[j].p;
                         update_LUT_number(i);
                         avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                        avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
+                        avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) - circuits[i].num_of_8KBRAM;
 
                     }  
                 }
             }
 
 
-            if(move == 0){      
+            if(move == 0){//move to 8KBRAM  
                 if(BRAM8K_fit.s * BRAM8K_fit.p <= avail_8KBRAM && BRAM8K_fit.s * BRAM8K_fit.p != 0){
-                    
-                    //increase the number of BRAM128K
+                    //increase the number of BRAM8K
                     circuits[i].num_of_8KBRAM += BRAM8K_fit.s * BRAM8K_fit.p;
+                    //decrease the number of BRAM128K
                     circuits[i].num_of_128KBRAM -= BRAMS128K[j].s * BRAMS128K[j].p;
 
+                    //update since number of resources changed
                     update_LUT_number(i);
                     avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
+                    avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) - circuits[i].num_of_8KBRAM;
                     
 
                     if(avail_8KBRAM >= 0){
+                        //moving process, changing the mapping structure
                         int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
                         lp_maps[lp_index].type = BRAM8K_fit.type;
                         lp_maps[lp_index].mode = BRAM8K_fit.mode;
@@ -1047,11 +1049,12 @@ void balance_128KBRAM(){
                         continue;
                     }
                     else{
+                        //if not possible, redo changes
                         circuits[i].num_of_8KBRAM -= BRAM8K_fit.s * BRAM8K_fit.p;
                         circuits[i].num_of_128KBRAM += BRAMS128K[j].s * BRAMS128K[j].p;
                         update_LUT_number(i);
                         avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                        avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/10) - circuits[i].num_of_8KBRAM;
+                        avail_8KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) - circuits[i].num_of_8KBRAM;
                     }
                 }
             }
@@ -1059,31 +1062,35 @@ void balance_128KBRAM(){
     }
 }
 
+//move from 8KBRAM to LUTRAM/128KBRAM
 void balance_8KBRAM(){
+    //loop over all circuits
     for(int i = 0; i < num_of_circuits; i++){
-        
+        //if already balanced, no changes
         if(balance[i]){
             continue;
         }
+        
+        //no need to move from 128K to other RAMs
+        if(circuits[i].util_128KBRAM >= circuits[i].util_8KBRAM || circuits[i].util_8KBRAM <= circuits[i].util_LUT)
+            continue;
 
         balance[i] = true;
 
-
+        //get the logical RAMs mapped to 8KBRAM and sort them
         vector<LP_map> BRAMS8K = get_BRAMS(i,1);
         sort(BRAMS8K.begin(),BRAMS8K.end(),compare_two_Logical_RAM_ascending);
         
-        update_LUT_number(i);
+        //calculate available resources
         int avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-        int avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
+        int avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
         
-        
-        for(int j = 0; j < BRAMS8K.size(); j++){
-            
-            update_LUT_number(i);
+        for(int j = 0; j < BRAMS8K.size(); j++){    
+            //no need to move anymore
             if((circuits[i].util_128KBRAM >= circuits[i].util_8KBRAM && circuits[i].util_LUT >= circuits[i].util_8KBRAM))
                 break;
             
-            //move from BRAM128K TO LUTRAM
+        
             int moving_r_index = BRAMS8K[j].r_index;
 
             if(circuits[i].ram[moving_r_index].packed)
@@ -1092,27 +1099,29 @@ void balance_8KBRAM(){
             Fit LUTRAM_fit = best_mapping_on_LUTRAM(circuits[i].ram[moving_r_index],true);
             Fit BRAM128K_fit = best_mapping_on_128KBRAM(circuits[i].ram[moving_r_index],true);
 
-            int move = 0;
+            int move = 0;//decide where to move
             if(circuits[i].ram[BRAMS8K[j].r_index].mode == "TrueDualPort" || LUTRAM_fit.req_area == -1){
-               move =  0;
+               move =  0;//can not be mapped to LUTRAM
             }
             else if(circuits[i].util_LUT < circuits[i].util_8KBRAM){
-                move = 1;
+                move = 1;//move to LUTRAM
             }
             
 
-            if(move == 1){
+            if(move == 1){//move to LUTRAM
                 if(LUTRAM_fit.s * LUTRAM_fit.p <= avail_logic && LUTRAM_fit.s * LUTRAM_fit.p != 0){
-                
+                    //increase the number of LUTRAMs
                     circuits[i].num_of_LUTRAM += LUTRAM_fit.s * LUTRAM_fit.p;
+                    //decrease the number of 8KBRAM
                     circuits[i].num_of_8KBRAM -= BRAMS8K[j].s * BRAMS8K[j].p;
 
+                    //update since the resources changed
                     update_LUT_number(i);
                     avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                    avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
+                    avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
                     
-
                     if(avail_logic >= 0){
+                        //if moving is possible, change the mapping structure
                         int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
                         lp_maps[lp_index].type = LUTRAM_fit.type;
                         lp_maps[lp_index].mode = LUTRAM_fit.mode;
@@ -1122,29 +1131,29 @@ void balance_8KBRAM(){
                         continue;
                     }
                     else{
+                        //if moving is not possible, redo the changes
                         circuits[i].num_of_LUTRAM -= LUTRAM_fit.s * LUTRAM_fit.p;
                         circuits[i].num_of_8KBRAM += BRAMS8K[j].s * BRAMS8K[j].p;
                         update_LUT_number(i);
                         avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                        avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
-
+                        avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
                     }  
                 }
             }
-            
-            if(move == 0){
+            if(move == 0){//move to 128KBRAM
                 if(BRAM128K_fit.s * BRAM128K_fit.p <= avail_128KBRAM && BRAM128K_fit.s * BRAM128K_fit.p != 0){
-                
-                    //increase the number of BRAM128K
+                    //increase the number of 128KBRAM
                     circuits[i].num_of_128KBRAM += BRAM128K_fit.s * BRAM128K_fit.p;
+                    //decrease the number of 8KBRAM
                     circuits[i].num_of_8KBRAM -= BRAMS8K[j].s * BRAMS8K[j].p;
 
+                    //update since the resources changed
                     update_LUT_number(i);
                     avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                    avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
+                    avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
                     
-
                     if(avail_128KBRAM >= 0){
+                        //if moving is possible, change the mapping structure
                         int lp_index = circuits[i].ram[moving_r_index].lp_map_id;
                         lp_maps[lp_index].type = BRAM128K_fit.type;
                         lp_maps[lp_index].mode = BRAM128K_fit.mode;
@@ -1154,11 +1163,12 @@ void balance_8KBRAM(){
                         continue;
                     }
                     else{
+                        //if moving is not possible, redo the changes
                         circuits[i].num_of_128KBRAM -= BRAM128K_fit.s * BRAM128K_fit.p;
                         circuits[i].num_of_8KBRAM += BRAMS8K[j].s * BRAMS8K[j].p;
                         update_LUT_number(i);
                         avail_logic = ceil(LUT_in_circuit[i] / 2) - circuits[i].num_of_LUTRAM;
-                        avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/300) - circuits[i].num_of_128KBRAM;
+                        avail_128KBRAM   = ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) - circuits[i].num_of_128KBRAM;
                     }  
                 }
             }
@@ -1168,8 +1178,10 @@ void balance_8KBRAM(){
 
 
 int main(){
+    //parse the input files
     parse_input();
     
+    //find the initial mapping
     for(int i = 0 ; i < num_of_circuits; i++){
         counter = 0;
         for(int j = 0; j < circuits[i].ram.size(); j++){
@@ -1177,10 +1189,14 @@ int main(){
         }
     }
     
+    //find some packing to do between two single ports or two ROM
     cal_leftovers();
     pack_leftovers();
 
+
     get_memory_utilization();
+    
+    //balancing the mapping to reduce area
     for(int i = 0; i < 100; i++){
         for(int j = 0; j < num_of_circuits; j++)
             balance[j] = false;
@@ -1190,11 +1206,10 @@ int main(){
         balance_8KBRAM();
     }
     
-    
-
     cout << "===================================================BALANCE===========================================" << endl;
     get_memory_utilization();
     
+    //write the output for legality checker
     for(int i = 0; i < num_of_circuits; i++){
         for(int j = 0; j < circuits[i].ram.size(); j++){
             write_checker_file(circuits[i].ram[j],i);
