@@ -140,15 +140,15 @@ void get_memory_utilization(){
         circuits[i].util_8KBRAM = (double) (circuits[i].num_of_8KBRAM/ (ceil((double) LUT_in_circuit[i] / BRAM_8K_RATIO)));         
         circuits[i].util_128KBRAM = (double) (circuits[i].num_of_128KBRAM/ (ceil((double) LUT_in_circuit[i] / BRAM_128K_RATIO)));         
 
-        if(circuits[i].util_LUT < 0.9 || circuits[i].util_8KBRAM < 0.9 || circuits[i].util_128KBRAM < 0.9){
-            cout << "CIRCUIT NO : " << i << endl;
-            cout << "TOTAL NUMBER OF LUT BLOCKS " << LUT_in_circuit[i] << " ,USED LUT : " << circuits[i].num_of_LUTRAM + circuits[i].num_of_logic << endl;
-            cout << "TOTAL NUMBER OF 8KBRAM " << ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) << " ,USED 8KBRAM : " << circuits[i].num_of_8KBRAM << endl;
-            cout << "TOTAL NUMBER OF 128KBRAM " << ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) << " ,USED 128KBRAM : " << circuits[i].num_of_128KBRAM << endl;
-            cout << "LUT UTILIZATION " << circuits[i].util_LUT << endl;
-            cout << "8KBRAM UTILIZATION " << circuits[i].util_8KBRAM << endl;    
-            cout << "128KBRAM UTILIZATION " << circuits[i].util_128KBRAM << endl;
-        }
+        // if(circuits[i].util_LUT < 0.9 || circuits[i].util_8KBRAM < 0.9 || circuits[i].util_128KBRAM < 0.9){
+        cout << "CIRCUIT NO : " << i << endl;
+        cout << "TOTAL NUMBER OF LUT BLOCKS " << LUT_in_circuit[i] << " ,USED LUT : " << circuits[i].num_of_LUTRAM + circuits[i].num_of_logic << endl;
+        cout << "TOTAL NUMBER OF 8KBRAM " << ceil((double)LUT_in_circuit[i]/BRAM_8K_RATIO) << " ,USED 8KBRAM : " << circuits[i].num_of_8KBRAM << endl;
+        cout << "TOTAL NUMBER OF 128KBRAM " << ceil((double)LUT_in_circuit[i]/BRAM_128K_RATIO) << " ,USED 128KBRAM : " << circuits[i].num_of_128KBRAM << endl;
+        cout << "LUT UTILIZATION " << circuits[i].util_LUT << endl;
+        cout << "8KBRAM UTILIZATION " << circuits[i].util_8KBRAM << endl;    
+        cout << "128KBRAM UTILIZATION " << circuits[i].util_128KBRAM << endl;
+        // }
     }
 }
 
