@@ -283,7 +283,7 @@ Fit best_mapping_on_LUTRAM(RAM r, bool re_map){
     int best_LUTRAM_mode = -1;
     int best_LUTRAM_s = 0;
     int best_LUTRAM_p = 0;
-    if((r.mode == "SimpleDualPort" && !re_map) || (r.mode != "TrueDualPort" && re_map)){
+    if(r.mode != "TrueDualPort"){
         //LUTRAM MODE 0
         int lut_mode_0 = 0;
         int lut_mode_0_logic = 0;
@@ -428,7 +428,7 @@ Fit best_mapping_on_8KBRAM(RAM r, bool re_map){
     int best_8KBRAM_s;
     for(int x = 1 ; x <= BRAM_8K_MAX_WIDTH; x *= 2){
         //x32 is not available on TRUEDUALPORT mode!
-        if(((r.mode != "SimpleDualPort" && !re_map) || (r.mode == "TrueDualPort" && re_map)) && x == BRAM_8K_MAX_WIDTH){
+        if(r.mode == "TrueDualPort" && x == BRAM_8K_MAX_WIDTH){
             continue;
         }
         int req_ram = ceil((double)r.width/x) * ceil((double)r.depth/(BRAM_8K_BITS/x));
@@ -494,7 +494,7 @@ Fit best_mapping_on_128KBRAM(RAM r, bool re_map){
     int best_128KBRAM_s;
     for(int x = 1 ; x <= BRAM_128K_MAX_WIDTH; x *= 2){
         //x128 is not available on TRUEDUALPORT mode!
-        if(((r.mode != "SimpleDualPort" && !re_map) || (r.mode == "TrueDualPort" && re_map)) && x == BRAM_128K_MAX_WIDTH){
+        if(r.mode == "TrueDualPort" && x == BRAM_128K_MAX_WIDTH){
             continue;
         }
         int req_ram = ceil((double)r.width/x) * ceil((double)r.depth/(BRAM_128K_BITS/x));
@@ -662,6 +662,10 @@ void cal_leftovers(){
         if(circuits[c_index].ram[r_index].mode != "ROM" && circuits[c_index].ram[r_index].mode != "SinglePort")
             continue;
         
+        //if single port RAM and ROM are in LUTRAM, they can not be packed!
+        if(lp_maps[i].type == 0)
+            continue;
+        
         int logical_ram_width = circuits[c_index].ram[r_index].width;
         int logical_ram_depth = circuits[c_index].ram[r_index].depth;
 
@@ -709,6 +713,17 @@ void pack_leftovers(){
             //no leftover
             continue;
         }
+
+        // can not pack in LUTRAMs
+        if(lp_maps[i].type == 0)
+            continue;
+
+        //max width is not available in TrueDualMode
+        if(lp_maps[i].type == 1 && lp_maps[i].mode == BRAM_8K_MAX_WIDTH)
+            continue;
+
+        if(lp_maps[i].type == 2 && lp_maps[i].mode == BRAM_128K_MAX_WIDTH)
+            continue;
 
         if(circuits[c_index].ram[r_index].packed){//already packed with another rom
             continue;
@@ -1189,15 +1204,10 @@ int main(){
         }
     }
     
-    //find some packing to do between two single ports or two ROM
-    cal_leftovers();
-    pack_leftovers();
-
-
     get_memory_utilization();
     
     //balancing the mapping to reduce area
-    for(int i = 0; i < 100; i++){
+    for(int i = 0; i < 5; i++){
         for(int j = 0; j < num_of_circuits; j++)
             balance[j] = false;
 
@@ -1206,9 +1216,14 @@ int main(){
         balance_8KBRAM();
     }
     
+    
     cout << "===================================================BALANCE===========================================" << endl;
     get_memory_utilization();
     
+    //find some packing to do between two single ports or two ROM
+    cal_leftovers();
+    pack_leftovers();
+
     //write the output for legality checker
     for(int i = 0; i < num_of_circuits; i++){
         for(int j = 0; j < circuits[i].ram.size(); j++){
