@@ -1224,6 +1224,9 @@ int main(){
     cal_leftovers();
     pack_leftovers();
 
+    balance_LUTRAM_to_BRAM();
+    balance_128KBRAM();
+    balance_8KBRAM();
     //write the output for legality checker
     for(int i = 0; i < num_of_circuits; i++){
         for(int j = 0; j < circuits[i].ram.size(); j++){
