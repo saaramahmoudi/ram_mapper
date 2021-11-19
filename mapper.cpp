@@ -665,17 +665,6 @@ void cal_leftovers(){
         //if single port RAM and ROM are in LUTRAM, they can not be packed!
         if(lp_maps[i].type == 0)
             continue;
-
-        // can not pack in LUTRAMs
-        if(lp_maps[i].type == 0)
-            continue;
-
-        //max width is not available in TrueDualMode
-        if(lp_maps[i].type == 1 && lp_maps[i].mode == BRAM_8K_MAX_WIDTH)
-            continue;
-
-        if(lp_maps[i].type == 2 && lp_maps[i].mode == BRAM_128K_MAX_WIDTH)
-            continue;
         
         int logical_ram_width = circuits[c_index].ram[r_index].width;
         int logical_ram_depth = circuits[c_index].ram[r_index].depth;
@@ -725,9 +714,21 @@ void pack_leftovers(){
             continue;
         }
 
+         // can not pack in LUTRAMs
+        if(lp_maps[i].type == 0)
+            continue;
+
+        //max width is not available in TrueDualMode
+        if(lp_maps[i].type == 1 && lp_maps[i].mode == BRAM_8K_MAX_WIDTH)
+            continue;
+
+        if(lp_maps[i].type == 2 && lp_maps[i].mode == BRAM_128K_MAX_WIDTH)
+            continue;
+        
         if(circuits[c_index].ram[r_index].packed){//already packed with another rom
             continue;
         }
+        
         int max_ram_id_2 = -1;
         int max_depth_2 = INT_MAX;
         int max_width_2 = INT_MAX;
@@ -1224,9 +1225,9 @@ int main(){
     cal_leftovers();
     pack_leftovers();
 
-    balance_LUTRAM_to_BRAM();
-    balance_128KBRAM();
-    balance_8KBRAM();
+    // balance_LUTRAM_to_BRAM();
+    // balance_128KBRAM();
+    // balance_8KBRAM();
     //write the output for legality checker
     for(int i = 0; i < num_of_circuits; i++){
         for(int j = 0; j < circuits[i].ram.size(); j++){
