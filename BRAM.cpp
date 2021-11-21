@@ -303,7 +303,7 @@ Fit best_mapping_on_BRAM(RAM r, bool re_map){
 //map available logical RAMs to physical in Circuit c
 void find_best_mapping(RAM r, int circuit_id, bool re_map){
 
-    Fit BRAM8K_fit = best_mapping_on_BRAM(r,re_map);
+    Fit BRAM_fit = best_mapping_on_BRAM(r,re_map);
     
     int best_type;
     int best_mode;
@@ -313,12 +313,12 @@ void find_best_mapping(RAM r, int circuit_id, bool re_map){
     int best_s;
 
 
-    best_area = BRAM8K_fit.req_area;
-    best_mode = BRAM8K_fit.mode;
+    best_area = BRAM_fit.req_area;
+    best_mode = BRAM_fit.mode;
     best_type = 0;
-    LUT = BRAM8K_fit.req_logic;
-    best_p = BRAM8K_fit.p;
-    best_s = BRAM8K_fit.s;
+    LUT = BRAM_fit.req_logic;
+    best_p = BRAM_fit.p;
+    best_s = BRAM_fit.s;
 
     if(!re_map){
         LP_map lp_map_temp;

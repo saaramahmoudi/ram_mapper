@@ -862,7 +862,7 @@ void balance_LUTRAM_to_BRAM(){
         //loop over the candidates 
         for(int j = 0; j < LUTRAMS.size(); j++){
             //if nothing left to fill break the process
-            if(avail_8KBRAM == 0 && avail_128KBRAM == 0)
+            if((avail_8KBRAM == 0 && avail_128KBRAM == 0))
                 break;
 
             int moving_r_index = LUTRAMS[j].r_index;
