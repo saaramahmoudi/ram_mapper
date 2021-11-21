@@ -87,7 +87,7 @@ int BRAM_RATIO;
 double BRAM_AREA;
 int BRAM_BITS;
 
-int small_BRAM_ratio[] = {5, 15, 10, 1, 20, 25};
+int small_BRAM_ratio[] = {1, 5, 15, 10, 20, 25};
 int large_BRAM_ratio[] = {10, 20, 40, 80, 160, 300};
 
 
@@ -474,6 +474,7 @@ long double get_geo_average(){
     }
     for(int i = 0 ; i < num_of_circuits; i++){
         long total_logic_in_circuit = max(circuits[i].num_of_logic + (int) ceil((double)circuits[i].additional_logic/10) ,circuits[i].num_of_BRAM*BRAM_RATIO);
+        cout << "no: " << i << " " << total_logic_in_circuit << endl;
         g_average *= total_logic_in_circuit;
     }
     return pow(g_average,(1.0/num_of_circuits));
@@ -481,52 +482,79 @@ long double get_geo_average(){
 
 
 int main(int argc, char** argv){
-    
-    BRAM_BITS = atoi(argv[1]);
-    
-
-    bool small = BRAM_BITS > 16384 ? false : true;
-
     //parse the input files
     parse_input();
     
-    long double best_geo_average = DBL_MAX;
-    int best_max_width;
-    int best_ratio;
-    bool re_map = false;
-    for(int ratio = 0 ; ratio < 6; ratio++){
-        BRAM_RATIO = small ? small_BRAM_ratio[ratio] : large_BRAM_ratio[ratio];
-        for(BRAM_MAX_WIDTH = 2; BRAM_MAX_WIDTH <= BRAM_BITS/256; BRAM_MAX_WIDTH *= 2){
-            //calculate area based on bits
-            BRAM_AREA = 9000 + 5 * BRAM_BITS  + 90 * sqrt(BRAM_BITS) + 600 * 2 * BRAM_MAX_WIDTH; 
-            BRAM_AREA /= 10000;
-            
-            //find the initial mapping
-            for(int i = 0 ; i < num_of_circuits; i++){
-                counter = 0;
-                for(int j = 0; j < circuits[i].ram.size(); j++){
-                    find_best_mapping(circuits[i].ram[j],i,re_map);
-                }
-            }
-            re_map = true;
-            //find some packing to do between two single ports or two ROM
-            cal_leftovers();
-            pack_leftovers();
-            long double g_average = get_geo_average();
-            // cout << "max width " << BRAM_MAX_WIDTH << " RATIO " << BRAM_RATIO << " : " << g_average << endl; 
-            if(g_average < best_geo_average){
-                best_geo_average = g_average;
-                best_max_width = BRAM_MAX_WIDTH;
-                best_ratio = BRAM_RATIO;
-                for(int i = 0; i < num_of_circuits; i++){
-                    for(int j = 0; j < circuits[i].ram.size(); j++){
-                            write_checker_file(circuits[i].ram[j],i);
-                    }
-                }
-            }
+    BRAM_BITS = atoi(argv[1]);
+    BRAM_RATIO = atoi(argv[3]);
+    BRAM_MAX_WIDTH = atoi(argv[2]);
+    // BRAM_RATIO = 1;
+    // BRAM_MAX_WIDTH = 2;
+    
+    //calculate area based on bits
+    BRAM_AREA = 9000 + 5 * BRAM_BITS  + 90 * sqrt(BRAM_BITS) + 600 * 2 * BRAM_MAX_WIDTH; 
+    BRAM_AREA /= 10000;
+
+    //find the initial mapping
+    for(int i = 0 ; i < num_of_circuits; i++){
+        counter = 0;
+        for(int j = 0; j < circuits[i].ram.size(); j++){
+            find_best_mapping(circuits[i].ram[j],i,false);
         }
     }
-    // cout << "best" << endl;
-    cout << best_max_width << " " << best_ratio << endl; 
+
+    cal_leftovers();
+    pack_leftovers();
+
+    for(int i = 0; i < num_of_circuits; i++){
+        for(int j = 0; j < circuits[i].ram.size(); j++){
+                write_checker_file(circuits[i].ram[j],i);
+        }
+    }
+    
+    cout << BRAM_MAX_WIDTH << " " << BRAM_RATIO << endl;
+    // get_geo_average();
+    bool small = BRAM_BITS > 16384 ? false : true;
+
+   
+    
+    // long double best_geo_average = DBL_MAX;
+    // int best_max_width;
+    // int best_ratio;
+    // bool re_map = false;
+    // for(int ratio = 0 ; ratio < 6; ratio++){
+    //     BRAM_RATIO = small ? small_BRAM_ratio[ratio] : large_BRAM_ratio[ratio];
+    //     for(BRAM_MAX_WIDTH = 2; BRAM_MAX_WIDTH <= BRAM_BITS/256; BRAM_MAX_WIDTH *= 2){
+    //         //calculate area based on bits
+    //         BRAM_AREA = 9000 + 5 * BRAM_BITS  + 90 * sqrt(BRAM_BITS) + 600 * 2 * BRAM_MAX_WIDTH; 
+    //         BRAM_AREA /= 10000;
+            
+    //         //find the initial mapping
+    //         for(int i = 0 ; i < num_of_circuits; i++){
+    //             counter = 0;
+    //             for(int j = 0; j < circuits[i].ram.size(); j++){
+    //                 find_best_mapping(circuits[i].ram[j],i,re_map);
+    //             }
+    //         }
+    //         re_map = true;
+    //         //find some packing to do between two single ports or two ROM
+    //         cal_leftovers();
+    //         pack_leftovers();
+    //         long double g_average = get_geo_average();
+    //         // cout << "max width " << BRAM_MAX_WIDTH << " RATIO " << BRAM_RATIO << " : " << g_average << endl; 
+    //         if(g_average < best_geo_average){
+    //             best_geo_average = g_average;
+    //             best_max_width = BRAM_MAX_WIDTH;
+    //             best_ratio = BRAM_RATIO;
+    //             for(int i = 0; i < num_of_circuits; i++){
+    //                 for(int j = 0; j < circuits[i].ram.size(); j++){
+    //                         write_checker_file(circuits[i].ram[j],i);
+    //                 }
+    //             }
+    //         }
+    //     }
+    // }
+    // // cout << "best" << endl;
+    // cout << best_max_width << " " << best_ratio << endl; 
     return 0;
 }
