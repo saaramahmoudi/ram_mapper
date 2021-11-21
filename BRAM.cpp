@@ -496,38 +496,36 @@ int main(int argc, char** argv){
     long double best_geo_average = DBL_MAX;
     int best_max_width;
     int best_ratio;
-    if(small){
-        bool re_map = false;
-        for(int ratio = 0 ; ratio < 6; ratio++){
-            BRAM_RATIO = small_BRAM_ratio[ratio];
-            for(BRAM_MAX_WIDTH = 2; BRAM_MAX_WIDTH <= BRAM_BITS/256; BRAM_MAX_WIDTH *= 2){
-                //find the initial mapping
-                for(int i = 0 ; i < num_of_circuits; i++){
-                    counter = 0;
+    bool re_map = false;
+    for(int ratio = 0 ; ratio < 6; ratio++){
+        BRAM_RATIO = small ? small_BRAM_ratio[ratio] : large_BRAM_ratio[ratio];
+        for(BRAM_MAX_WIDTH = 2; BRAM_MAX_WIDTH <= BRAM_BITS/256; BRAM_MAX_WIDTH *= 2){
+            //find the initial mapping
+            for(int i = 0 ; i < num_of_circuits; i++){
+                counter = 0;
+                for(int j = 0; j < circuits[i].ram.size(); j++){
+                    find_best_mapping(circuits[i].ram[j],i,re_map);
+                }
+            }
+            re_map = true;
+            //find some packing to do between two single ports or two ROM
+            cal_leftovers();
+            pack_leftovers();
+            long double g_average = get_geo_average();
+            // cout << "max width " << BRAM_MAX_WIDTH << " RATIO " << BRAM_RATIO << " : " << g_average << endl; 
+            if(g_average < best_geo_average){
+                best_geo_average = g_average;
+                best_max_width = BRAM_MAX_WIDTH;
+                best_ratio = BRAM_RATIO;
+                for(int i = 0; i < num_of_circuits; i++){
                     for(int j = 0; j < circuits[i].ram.size(); j++){
-                        find_best_mapping(circuits[i].ram[j],i,re_map);
+                            write_checker_file(circuits[i].ram[j],i);
                     }
                 }
-                re_map = true;
-                //find some packing to do between two single ports or two ROM
-                cal_leftovers();
-                pack_leftovers();
-                long double g_average = get_geo_average();
-                if(g_average < best_geo_average){
-                    best_geo_average = g_average;
-                    best_max_width = BRAM_MAX_WIDTH;
-                    best_ratio = BRAM_RATIO;
-                    for(int i = 0; i < num_of_circuits; i++){
-                        for(int j = 0; j < circuits[i].ram.size(); j++){
-                                write_checker_file(circuits[i].ram[j],i);
-                        }
-                    }
-                }
-
             }
         }
     }
-
-    cout << best_geo_average << " " << best_max_width << " " << best_ratio << endl; 
+    // cout << "best" << endl;
+    cout << best_max_width << " " << best_ratio << endl; 
     return 0;
 }
