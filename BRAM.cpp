@@ -483,12 +483,9 @@ long double get_geo_average(){
 int main(int argc, char** argv){
     
     BRAM_BITS = atoi(argv[1]);
+    
 
     bool small = BRAM_BITS > 16384 ? false : true;
-
-    //calculate area based on bits
-    BRAM_AREA = 9000 + 5 * BRAM_BITS  + 90 * sqrt(BRAM_BITS) + 600 * 2 * BRAM_MAX_WIDTH; 
-    BRAM_AREA /= 10000;
 
     //parse the input files
     parse_input();
@@ -500,6 +497,10 @@ int main(int argc, char** argv){
     for(int ratio = 0 ; ratio < 6; ratio++){
         BRAM_RATIO = small ? small_BRAM_ratio[ratio] : large_BRAM_ratio[ratio];
         for(BRAM_MAX_WIDTH = 2; BRAM_MAX_WIDTH <= BRAM_BITS/256; BRAM_MAX_WIDTH *= 2){
+            //calculate area based on bits
+            BRAM_AREA = 9000 + 5 * BRAM_BITS  + 90 * sqrt(BRAM_BITS) + 600 * 2 * BRAM_MAX_WIDTH; 
+            BRAM_AREA /= 10000;
+            
             //find the initial mapping
             for(int i = 0 ; i < num_of_circuits; i++){
                 counter = 0;
