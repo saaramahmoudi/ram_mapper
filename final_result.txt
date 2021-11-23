@@ -1,0 +1,1405 @@
+************************************************************
+FIRST BRAM: mem size = 1024 - Max Width = 2, - Ratio: 1
+SECOND BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+BEST LUTRAM RATIO: 1
+best area = 2.73199e+08
+************************************************************
+FIRST BRAM: mem size = 1024 - Max Width = 2, - Ratio: 1
+SECOND BRAM: mem size = 4096 - Max Width = 16, - Ratio: 10
+BEST LUTRAM RATIO: 1
+best area = 2.67384e+08
+************************************************************
+FIRST BRAM: mem size = 1024 - Max Width = 2, - Ratio: 1
+SECOND BRAM: mem size = 8192 - Max Width = 16, - Ratio: 10
+BEST LUTRAM RATIO: 1
+best area = 2.66674e+08
+************************************************************
+FIRST BRAM: mem size = 1024 - Max Width = 2, - Ratio: 1
+SECOND BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+BEST LUTRAM RATIO: 1
+best area = 2.60233e+08
+************************************************************
+FIRST BRAM: mem size = 1024 - Max Width = 2, - Ratio: 1
+SECOND BRAM: mem size = 32768 - Max Width = 64, - Ratio: 55
+BEST LUTRAM RATIO: 1
+best area = 2.57887e+08
+************************************************************
+FIRST BRAM: mem size = 1024 - Max Width = 2, - Ratio: 1
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 85
+BEST LUTRAM RATIO: 1
+best area = 2.50687e+08
+************************************************************
+FIRST BRAM: mem size = 1024 - Max Width = 2, - Ratio: 1
+SECOND BRAM: mem size = 131072 - Max Width = 128, - Ratio: 225
+BEST LUTRAM RATIO: 1
+best area = 2.44244e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 1024 - Max Width = 2, - Ratio: 5
+BEST LUTRAM RATIO: 1
+best area = 2.40065e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+BEST LUTRAM RATIO: 1
+best area = 2.37427e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 8192 - Max Width = 16, - Ratio: 10
+BEST LUTRAM RATIO: 1
+best area = 2.15615e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 16384 - Max Width = 32, - Ratio: 20
+BEST LUTRAM RATIO: 1
+best area = 2.12219e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 32768 - Max Width = 64, - Ratio: 45
+BEST LUTRAM RATIO: 1
+best area = 2.09986e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 85
+BEST LUTRAM RATIO: 1
+best area = 2.06974e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 85
+BEST LUTRAM RATIO: 1
+best area = 2.06974e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 85
+BEST LUTRAM RATIO: 1
+best area = 2.06974e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 85
+BEST LUTRAM RATIO: 1
+best area = 2.06974e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 85
+BEST LUTRAM RATIO: 1
+best area = 2.06974e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 85
+BEST LUTRAM RATIO: 1
+best area = 2.06974e+08
+************************************************************
+FIRST BRAM: mem size = 2048 - Max Width = 8, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 85
+BEST LUTRAM RATIO: 1
+best area = 2.06974e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 4096 - Max Width = 16, - Ratio: 5
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 115
+BEST LUTRAM RATIO: 1
+best area = 2.05233e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 1
+best area = 2.02679e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 255
+BEST LUTRAM RATIO: 2
+best area = 1.99451e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+************************************************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
+******************************BEST******************************
+FIRST BRAM: mem size = 16384 - Max Width = 32, - Ratio: 15
+SECOND BRAM: mem size = 65536 - Max Width = 64, - Ratio: 240
+BEST LUTRAM RATIO: 3
+best area = 1.97385e+08
