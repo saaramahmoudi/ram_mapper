@@ -8,7 +8,7 @@ To compile the mapper_Stratix_IV.cpp, you can simply use the following command.
 make mapper_Stratix_IV
 ```
 
-For result check, you can use the following command. This command will execute the mapper. Hence, the mapper_Stratix_IV.txt will be generated, which will be checker input. Checker will automatically be executed using the command, and you can see the code result. 
+For result check, you can use the following command. This command will execute the mapper. Hence, the Stratix-IV-like.txt will be generated, which will be checker input. Checker will automatically be executed using the command, and you can see the code result. 
 
 ```bash
 make mapper_Stratix_IV_Run
